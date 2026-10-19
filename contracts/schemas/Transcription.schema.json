@@ -1,0 +1,34 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "text": {
+      "title": "Text",
+      "type": "string"
+    },
+    "language": {
+      "const": "ru",
+      "default": "ru",
+      "title": "Language",
+      "type": "string"
+    },
+    "duration_seconds": {
+      "anyOf": [
+        {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Duration Seconds"
+    }
+  },
+  "required": [
+    "text"
+  ],
+  "title": "Transcription",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

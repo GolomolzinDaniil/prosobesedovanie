@@ -1,0 +1,16 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "session_id": {
+      "format": "uuid",
+      "title": "Session Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "session_id"
+  ],
+  "title": "SessionCommand",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

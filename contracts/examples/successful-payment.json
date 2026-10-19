@@ -1,0 +1,7 @@
+{
+  "currency": "XTR",
+  "total_amount": 75,
+  "invoice_payload": "ord_01J8ZEXAMPLEPAYLOAD",
+  "telegram_payment_charge_id": "tg_charge_01J8ZEXAMPLE",
+  "provider_payment_charge_id": null
+}

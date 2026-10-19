@@ -1,0 +1,33 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "ok": {
+      "const": true,
+      "title": "Ok",
+      "type": "boolean"
+    },
+    "available": {
+      "minimum": 0,
+      "title": "Available",
+      "type": "integer"
+    },
+    "reserved": {
+      "minimum": 0,
+      "title": "Reserved",
+      "type": "integer"
+    },
+    "trial_used": {
+      "title": "Trial Used",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "ok",
+    "available",
+    "reserved",
+    "trial_used"
+  ],
+  "title": "BalanceResponse",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

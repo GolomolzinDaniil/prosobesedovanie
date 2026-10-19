@@ -1,0 +1,31 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "storage_key": {
+      "minLength": 1,
+      "title": "Storage Key",
+      "type": "string"
+    },
+    "mime_type": {
+      "enum": [
+        "audio/ogg",
+        "audio/opus"
+      ],
+      "title": "Mime Type",
+      "type": "string"
+    },
+    "duration_seconds": {
+      "exclusiveMinimum": 0,
+      "title": "Duration Seconds",
+      "type": "number"
+    }
+  },
+  "required": [
+    "storage_key",
+    "mime_type",
+    "duration_seconds"
+  ],
+  "title": "SynthesizedAudio",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

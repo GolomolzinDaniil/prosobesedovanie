@@ -1,0 +1,20 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "product_id": {
+      "enum": [
+        "single",
+        "pack5",
+        "pack10"
+      ],
+      "title": "Product Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "product_id"
+  ],
+  "title": "CreateInvoice",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

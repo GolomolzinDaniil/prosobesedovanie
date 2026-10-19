@@ -1,0 +1,68 @@
+{
+  "version": "2.0",
+  "generated_at": "2026-10-18T16:31:09+00:00",
+  "note": "Результат воспроизводимой проверки согласованности пакета (§5.1). Подтверждает согласованность спецификации, не предметную точность вопросов, не реальную задержку провайдеров и не работающий бот.",
+  "overall": "ok",
+  "checks": [
+    {
+      "id": "schemas",
+      "description": "contracts/schemas соответствуют моделям (регенерация)",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "examples",
+      "description": "примеры contracts/examples соответствуют manifest.json",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "catalog",
+      "description": "каталог: 6 сценариев, 36 основных, рубрики и длины",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "settings",
+      "description": "значения settings.json равны зафиксированным в ТЗ 2.0",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "states",
+      "description": "state-machine.json согласован с SessionStatus",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "wbs",
+      "description": "WBS: суммы 90/18/30/6, задачи 2–6 ч, зависимости ацикличны, критический путь 58 ч",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "matrix",
+      "description": "checklist-matrix.csv: ≥67 детализаций, покрытие §5.2",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "prompts",
+      "description": "промпты 2.0 на месте, непустые, хеши совпадают с манифестом",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "secrets",
+      "description": "example-профиль и .env.example без значений секретов",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "id": "references",
+      "description": "18 эталонов AT04/AT10: структура, диапазоны, reviewer_status",
+      "status": "ok",
+      "detail": ""
+    }
+  ]
+}

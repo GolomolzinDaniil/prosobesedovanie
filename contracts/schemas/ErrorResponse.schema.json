@@ -1,0 +1,119 @@
+{
+  "$defs": {
+    "ErrorBody": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/ErrorCode"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field"
+        },
+        "retry_after_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retry After Seconds"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "title": "ErrorBody",
+      "type": "object"
+    },
+    "ErrorCode": {
+      "description": "Стабильные коды доменных ошибок (§3.1–3.2). Реестр расширяем, коды стабильны.",
+      "enum": [
+        "EMPTY_ANSWER",
+        "ANSWER_TOO_LONG",
+        "REPLY_REQUIRED",
+        "ACTIVE_SESSION",
+        "NO_CREDIT",
+        "BUSY",
+        "STALE_ACTION",
+        "NO_ANSWERS",
+        "CONSENT_REQUIRED",
+        "NOT_FOUND",
+        "DELETION_IN_PROGRESS",
+        "VOICE_TOO_LARGE",
+        "MEDIA_STORAGE_FULL",
+        "VOICE_TOO_LONG",
+        "VOICE_FORMAT_UNSUPPORTED",
+        "TRANSCRIPTION_FAILED",
+        "AI_UNAVAILABLE",
+        "AI_INVALID_OUTPUT",
+        "BUDGET_EXCEEDED",
+        "RATE_LIMITED",
+        "REPORT_NOT_READY",
+        "REPORT_EXPIRED",
+        "DELIVERY_FAILED",
+        "PAYMENT_MISMATCH",
+        "REFUND_PENDING",
+        "INVALID_INPUT",
+        "UNSUPPORTED_ROLE",
+        "UNSUPPORTED_LEVEL",
+        "UNSUPPORTED_FORMAT",
+        "INVALID_UPDATE",
+        "FORBIDDEN",
+        "UNSUPPORTED_MEDIA_TYPE",
+        "PAYLOAD_TOO_LARGE",
+        "SERVICE_UNAVAILABLE",
+        "INTERNAL_ERROR"
+      ],
+      "title": "ErrorCode",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "ok": {
+      "const": false,
+      "title": "Ok",
+      "type": "boolean"
+    },
+    "error": {
+      "$ref": "#/$defs/ErrorBody"
+    },
+    "request_id": {
+      "format": "uuid",
+      "title": "Request Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ok",
+    "error",
+    "request_id"
+  ],
+  "title": "ErrorResponse",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

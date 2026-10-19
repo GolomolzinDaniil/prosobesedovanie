@@ -1,0 +1,10 @@
+check_id,smoke_check,how_to_verify,expected_evidence,responsible,result,date,notes
+A1,Клонирование репозитория и CI,"git clone; push ветки; наблюдать GitHub Actions (ruff + pytest + воспроизводимость артефактов)",зелёный пайплайн CI на тестовой ветке,,,,
+A2,Сообщение тестового бота и webhook,"/start тестовому боту; python scripts/set_webhook.py; scripts/set_webhook.py --info",бот отвечает; getWebhookInfo.url совпадает с route,,,,
+A3,Миграция backup restore,"docker compose run --rm migrate; scripts/backup.sh; scripts/restore.sh <копия>; scripts/smoke.py",миграции применены; копия создана/восстановлена; SMOKE OK; tombstones повторно применены,,,,
+A4,JSON-запрос LLM,"профиль заполнен; smoke-поле llm.smoke.json_request_checked_at; один assess-вызов на staging",валидный TurnAssessment 2.0 от провайдера; контекст >= 16000 подтверждён,,,,
+A5,Русский STT,"тестовая голосовая сессия (OGG/Opus, ru); smoke-поле stt.smoke.russian_ogg_opus_checked_at",расшифровка на русском; экран подтверждения,,,,
+A6,OGG Opus TTS,"тестовая голосовая сессия; smoke-поле tts.smoke.russian_ogg_opus_checked_at",озвучка вопроса приходит голосовым OGG/Opus после текста,,,,
+A7,Health развёрнутого сервера,"scripts/smoke.py --api-base https://<host> (или изнутри сети); scripts/check_signals.py",health/live 200; health/ready 200; критических сигналов нет,,,,
+A8,Тестовое уведомление,"имитация сигнала (например отсутствующий heartbeat) и доставка в канал оператора",уведомление получено назначенным оператором,,,,
+S1,Передача секретов,"секрет-хранилище (не документ): BOT_TOKEN WEBHOOK_SECRET WEBHOOK_ROUTE_TOKEN DATABASE_URL MIGRATIONS_DATABASE_URL POSTGRES_PASSWORD MIGRATOR_PASSWORD *_API_KEY BACKUP_PASSPHRASE",получатель подтверждает доступ без раскрытия значений,,,,

@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "session_id": {
+      "format": "uuid",
+      "title": "Session Id",
+      "type": "string"
+    },
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "session_id",
+    "turn_id",
+    "text"
+  ],
+  "title": "SubmitAnswer",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

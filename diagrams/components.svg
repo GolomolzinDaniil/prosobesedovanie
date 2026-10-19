@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#334"/>
+    </marker>
+  </defs>
+  <rect width="980" height="560" fill="#fbfbfd"/>
+  <text x="490" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#223">ПроСобеседование — компоненты (§2.1, ТЗ 2.0)</text>
+
+  <!-- Telegram -->
+  <rect x="30" y="210" width="150" height="120" rx="12" fill="#e3f0ff" stroke="#3a6ea5" stroke-width="2"/>
+  <text x="105" y="240" text-anchor="middle" font-size="14" font-weight="bold" fill="#1d3f66">Telegram</text>
+  <text x="105" y="264" text-anchor="middle" font-size="11" fill="#334">клиент (Android/iOS/</text>
+  <text x="105" y="280" text-anchor="middle" font-size="11" fill="#334">Desktop), личный чат</text>
+  <text x="105" y="304" text-anchor="middle" font-size="11" fill="#334">Bot API: webhook,</text>
+  <text x="105" y="320" text-anchor="middle" font-size="11" fill="#334">getFile, sendMessage</text>
+
+  <!-- Reverse proxy -->
+  <rect x="230" y="70" width="170" height="70" rx="10" fill="#f4ecff" stroke="#7a5aa5" stroke-width="2"/>
+  <text x="315" y="98" text-anchor="middle" font-size="13" font-weight="bold" fill="#43305e">Reverse proxy (TLS)</text>
+  <text x="315" y="120" text-anchor="middle" font-size="11" fill="#334">HTTPS обязателен (§3.9)</text>
+
+  <!-- API process -->
+  <rect x="230" y="190" width="230" height="170" rx="10" fill="#e9f9ee" stroke="#2e8b57" stroke-width="2"/>
+  <text x="345" y="216" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e5c38">API-процесс (FastAPI)</text>
+  <text x="345" y="240" text-anchor="middle" font-size="11" fill="#334">POST /telegram/webhook/{route}</text>
+  <text x="345" y="258" text-anchor="middle" font-size="11" fill="#334">секрет, 1 MiB, JSON, дедупликация</text>
+  <text x="345" y="276" text-anchor="middle" font-size="11" fill="#334">GET /health/live · /health/ready</text>
+  <text x="345" y="294" text-anchor="middle" font-size="11" fill="#334">inbox: сохранение update</text>
+  <text x="345" y="312" text-anchor="middle" font-size="11" fill="#334">(200/400/403/404/413/415/503)</text>
+  <text x="345" y="338" text-anchor="middle" font-size="10" fill="#567">app/api · app/telegram (классификация)</text>
+
+  <!-- Worker process -->
+  <rect x="520" y="150" width="270" height="260" rx="10" fill="#fff4e0" stroke="#c8862a" stroke-width="2"/>
+  <text x="655" y="176" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5210">Worker-процесс (aiogram-адаптер)</text>
+  <text x="655" y="200" text-anchor="middle" font-size="11" fill="#334">inbox-worker: доменные обработчики</text>
+  <text x="655" y="218" text-anchor="middle" font-size="11" fill="#334">(команды, кнопки, ответы; ≤5 повторов)</text>
+  <text x="655" y="236" text-anchor="middle" font-size="11" fill="#334">jobs-worker: assess · report · transcribe · tts</text>
+  <text x="655" y="254" text-anchor="middle" font-size="11" fill="#334">(lease 120 с, heartbeat 20 с, семафоры 5/2/2)</text>
+  <text x="655" y="272" text-anchor="middle" font-size="11" fill="#334">outbox-sender: 1/с на чат, ≤20/с, 429 retry_after</text>
+  <text x="655" y="290" text-anchor="middle" font-size="11" fill="#334">lifecycle-sweeps: expiry, retention, /delete</text>
+  <text x="655" y="308" text-anchor="middle" font-size="11" fill="#334">heartbeat/мониторинг: метрики и сигналы (§3.10)</text>
+  <text x="655" y="332" text-anchor="middle" font-size="10" fill="#567">app/workers · app/services · app/domain</text>
+  <text x="655" y="350" text-anchor="middle" font-size="10" fill="#567">app/providers (LLM/STT/TTS-адаптеры)</text>
+  <text x="655" y="376" text-anchor="middle" font-size="10" fill="#567">media: /var/lib/.../media 0700 (≤256 MiB, ≤1 ч)</text>
+  <text x="655" y="394" text-anchor="middle" font-size="10" fill="#567">run: heartbeat, backup-статус</text>
+
+  <!-- PostgreSQL -->
+  <rect x="380" y="440" width="250" height="90" rx="10" fill="#e8eef7" stroke="#3a5ea5" stroke-width="2"/>
+  <text x="505" y="466" text-anchor="middle" font-size="14" font-weight="bold" fill="#243f6e">PostgreSQL (единственный источник)</text>
+  <text x="505" y="488" text-anchor="middle" font-size="11" fill="#334">14 таблиц (§2.3); очереди FOR UPDATE SKIP LOCKED</text>
+  <text x="505" y="506" text-anchor="middle" font-size="11" fill="#334">транзакции, дедупликация, retention (§3.9)</text>
+  <text x="505" y="522" text-anchor="middle" font-size="10" fill="#567">роли: app (DML) · migrator (DDL) · backup (SELECT)</text>
+
+  <!-- AI providers -->
+  <rect x="850" y="190" width="110" height="180" rx="10" fill="#fdeaea" stroke="#b04a4a" stroke-width="2"/>
+  <text x="905" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a2e2e">AI</text>
+  <text x="905" y="240" text-anchor="middle" font-size="11" fill="#334">LLM</text>
+  <text x="905" y="258" text-anchor="middle" font-size="11" fill="#334">STT</text>
+  <text x="905" y="276" text-anchor="middle" font-size="11" fill="#334">TTS</text>
+  <text x="905" y="304" text-anchor="middle" font-size="10" fill="#567">через адаптеры,</text>
+  <text x="905" y="320" text-anchor="middle" font-size="10" fill="#567">≤2 вызова</text>
+  <text x="905" y="336" text-anchor="middle" font-size="10" fill="#567">на операцию,</text>
+  <text x="905" y="352" text-anchor="middle" font-size="10" fill="#567">бюджет/резерв</text>
+
+  <!-- arrows -->
+  <line x1="105" y1="210" x2="270" y2="120" stroke="#334" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="150" y="150" font-size="11" fill="#334">updates (HTTPS)</text>
+  <line x1="330" y1="140" x2="338" y2="188" stroke="#334" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="180" y1="290" x2="228" y2="278" stroke="#334" stroke-width="0" />
+  <line x1="460" y1="290" x2="518" y2="290" stroke="#334" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+  <text x="462" y="278" font-size="10" fill="#567">через БД</text>
+  <line x1="345" y1="360" x2="430" y2="438" stroke="#334" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="330" y="410" font-size="11" fill="#334">inbox insert</text>
+  <line x1="620" y1="410" x2="565" y2="438" stroke="#334" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="600" y="430" font-size="11" fill="#334">claim/commit</text>
+  <line x1="790" y1="270" x2="848" y2="270" stroke="#334" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="793" y="258" font-size="10" fill="#567">без TG-ID</text>
+  <path d="M 640 150 C 400 40, 200 120, 130 205" fill="none" stroke="#334" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="380" y="66" font-size="11" fill="#334">outbox → sendMessage/sendVoice/editMessage (rate-limit, 429)</text>
+</svg>

@@ -1,0 +1,165 @@
+{
+  "version": "2.0",
+  "language": "ru",
+  "roles": ["python", "analyst", "qa"],
+  "levels": ["intern", "junior"],
+  "formats": ["text", "voice"],
+
+  "interview": {
+    "main_questions": 6,
+    "hr_questions": 2,
+    "technical_questions": 4,
+    "max_follow_ups_per_main": 1,
+    "max_follow_ups_per_session": 2,
+    "max_turns": 8,
+    "initial_difficulty": { "intern": 1, "junior": 2 },
+    "difficulty_min": { "intern": 1, "junior": 1 },
+    "difficulty_max": { "intern": 2, "junior": 3 },
+    "difficulty_up_min_topic_score": 3,
+    "difficulty_up_min_relevance": 3,
+    "difficulty_down_max_topic_score": 1,
+    "llm_temperature": 0.2
+  },
+
+  "limits": {
+    "answer_min_chars": 1,
+    "answer_max_chars": 4000,
+    "question_min_chars": 1,
+    "question_max_chars": 700,
+    "telegram_message_max_chars": 4096,
+    "message_part_max_chars": 3500,
+    "report_max_chars": 12000,
+    "report_parts_min": 1,
+    "report_parts_max": 4,
+    "callback_data_max_bytes": 64,
+    "ui_token_length_chars": 22,
+    "webhook_body_max_bytes": 1048576,
+    "active_sessions_per_user": 1,
+    "starts_per_24h": 3,
+    "commands_per_minute": 10,
+    "voice_max_bytes": 10485760,
+    "voice_max_seconds": 120,
+    "voice_format": "ogg_opus",
+    "stt_attempts_per_turn": 3,
+    "max_provider_calls_per_operation": 2,
+    "provider_retry_pause_min_seconds": 2,
+    "provider_retry_pause_max_seconds": 5,
+    "concurrent_active_sessions_total": 20,
+    "concurrent_llm": 5,
+    "concurrent_stt": 2,
+    "concurrent_tts": 2,
+    "ai_queue_max_seconds": 60,
+    "media_total_max_mib": 256,
+    "media_file_name_chars": 32,
+    "media_file_mode": "0600",
+    "media_dir_mode": "0700",
+    "decoder_memory_max_mib": 256,
+    "decoder_cpu_seconds_max": 10,
+    "decoder_wall_timeout_seconds": 10
+  },
+
+  "tokens_budget": {
+    "assess_input_max": 12000,
+    "assess_output_max": 1500,
+    "report_input_max": 12000,
+    "report_output_max": 3500,
+    "session_input_budget": 100000,
+    "session_output_budget": 22000,
+    "report_reserve_input": 24000,
+    "report_reserve_output": 7000,
+    "model_context_min": 16000
+  },
+
+  "timeouts_seconds": {
+    "assess_call": 20,
+    "report_call": 35,
+    "stt_call": 30,
+    "tts_call": 15,
+    "media_download": 15,
+    "media_decode": 10,
+    "assessment_deadline_total": 110,
+    "report_deadline_total": 140,
+    "transcription_deadline_total": 150,
+    "tts_deadline_total": 95,
+    "worker_lease": 120,
+    "worker_heartbeat": 20,
+    "pre_checkout_answer": 10
+  },
+
+  "sender": {
+    "per_chat_per_second": 1,
+    "global_per_second": 20,
+    "max_retries": 10,
+    "retry_window_hours": 24,
+    "backoff_base_seconds": 2,
+    "respect_retry_after": true
+  },
+
+  "slo_p95_seconds": {
+    "action_ack": 2,
+    "first_text_question": 5,
+    "next_text_question": 15,
+    "text_report": 45,
+    "transcription": 45,
+    "voiced_question": 60
+  },
+
+  "retention": {
+    "session_inactive_expire_hours": 24,
+    "cancelled_content_removal_hours": 24,
+    "completed_content_days": 30,
+    "audio_max_hours": 1,
+    "audio_sweep_interval_minutes": 5,
+    "session_sweep_interval_minutes": 5,
+    "retention_sweep_interval_minutes": 60,
+    "stt_draft_max_hours": 1,
+    "queue_payload_nullify_hours": 24,
+    "queue_metadata_days": 7,
+    "technical_logs_days": 14,
+    "events_days": 90,
+    "ai_calls_days": 90,
+    "backup_rolling_days": 7,
+    "tombstone_days": 7,
+    "deletion_deadline_hours": 24
+  },
+
+  "ui_tokens": {
+    "parameter_selection_minutes": 30,
+    "delete_confirm_minutes": 5,
+    "cancel_confirm_minutes": 5,
+    "question_control_hours": 24
+  },
+
+  "ui": {
+    "loading_update_after_seconds": 15,
+    "loading_update_max_times": 1
+  },
+
+  "inbox": {
+    "max_handler_retries": 5
+  },
+
+  "costs": {
+    "daily_ai_budget_usd": null,
+    "llm_input_per_1k_usd": null,
+    "llm_output_per_1k_usd": null,
+    "stt_per_minute_usd": null,
+    "tts_per_1k_chars_usd": null,
+    "budget_low_remainder_alert_ratio": 0.2
+  },
+
+  "alerts": {
+    "oldest_ai_job_seconds": 60,
+    "degraded_report_ratio_max": 0.1,
+    "degraded_report_window": 20,
+    "worker_heartbeat_missing_seconds": 60
+  },
+
+  "flags": {
+    "billing_enabled": false,
+    "voice_enabled": true
+  },
+
+  "support_contact": null,
+  "campaign_source_allowlist": []
+}

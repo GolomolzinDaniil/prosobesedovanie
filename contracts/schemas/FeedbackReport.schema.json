@@ -1,0 +1,199 @@
+{
+  "$defs": {
+    "Coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "main_total": {
+          "maximum": 6,
+          "minimum": 0,
+          "title": "Main Total",
+          "type": "integer"
+        },
+        "main_answered": {
+          "maximum": 6,
+          "minimum": 0,
+          "title": "Main Answered",
+          "type": "integer"
+        },
+        "main_skipped": {
+          "maximum": 6,
+          "minimum": 0,
+          "title": "Main Skipped",
+          "type": "integer"
+        },
+        "follow_ups": {
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Follow Ups",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "main_total",
+        "main_answered",
+        "main_skipped",
+        "follow_ups"
+      ],
+      "title": "Coverage",
+      "type": "object"
+    },
+    "ImprovedExample": {
+      "additionalProperties": false,
+      "properties": {
+        "turn_id": {
+          "format": "uuid",
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "uses_placeholders": {
+          "default": false,
+          "title": "Uses Placeholders",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "turn_id",
+        "text"
+      ],
+      "title": "ImprovedExample",
+      "type": "object"
+    },
+    "ReportAction": {
+      "additionalProperties": false,
+      "properties": {
+        "priority": {
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Priority",
+          "type": "integer"
+        },
+        "related_turn_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Related Turn Id"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "priority",
+        "text"
+      ],
+      "title": "ReportAction",
+      "type": "object"
+    },
+    "ReportFinding": {
+      "additionalProperties": false,
+      "description": "Наблюдение (сильная сторона либо ошибка/пробел). Для пропуска quote=null, skipped=true.",
+      "properties": {
+        "turn_id": {
+          "format": "uuid",
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote"
+        },
+        "skipped": {
+          "default": false,
+          "title": "Skipped",
+          "type": "boolean"
+        },
+        "comment": {
+          "minLength": 1,
+          "title": "Comment",
+          "type": "string"
+        }
+      },
+      "required": [
+        "turn_id",
+        "comment"
+      ],
+      "title": "ReportFinding",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "session_id": {
+      "format": "uuid",
+      "title": "Session Id",
+      "type": "string"
+    },
+    "partial": {
+      "title": "Partial",
+      "type": "boolean"
+    },
+    "coverage": {
+      "$ref": "#/$defs/Coverage"
+    },
+    "strengths": {
+      "items": {
+        "$ref": "#/$defs/ReportFinding"
+      },
+      "maxItems": 5,
+      "title": "Strengths",
+      "type": "array"
+    },
+    "gaps": {
+      "items": {
+        "$ref": "#/$defs/ReportFinding"
+      },
+      "maxItems": 5,
+      "title": "Gaps",
+      "type": "array"
+    },
+    "actions": {
+      "items": {
+        "$ref": "#/$defs/ReportAction"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Actions",
+      "type": "array"
+    },
+    "improved_examples": {
+      "items": {
+        "$ref": "#/$defs/ImprovedExample"
+      },
+      "maxItems": 3,
+      "title": "Improved Examples",
+      "type": "array"
+    }
+  },
+  "required": [
+    "session_id",
+    "partial",
+    "coverage",
+    "actions"
+  ],
+  "title": "FeedbackReport",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

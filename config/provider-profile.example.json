@@ -1,0 +1,70 @@
+{
+  "version": "2.0",
+  "_comment": "Шаблон профиля внешних AI-провайдеров (§1.4, §3.6). Значения null означают незаполненную внешнюю зависимость и блокируют запуск AI-вызовов; разработчик не придумывает значения в коде. После проверки smoke-сценариев файл копируется в provider-profile.json и заполняется реальными значениями. Ключи хранятся отдельно (секрет-хранилище/окружение), здесь — только названия переменных.",
+
+  "llm": {
+    "provider": null,
+    "model": null,
+    "endpoint": null,
+    "api_version": null,
+    "api_key_env": "LLM_API_KEY",
+    "context_window_tokens": null,
+    "temperature_supported": null,
+    "native_json_schema_supported": null,
+    "strict_json_fallback_documented": null,
+    "max_output_tokens": 3500,
+    "region": null,
+    "data_retention_terms": null,
+    "quota_requests_per_minute": null,
+    "price_input_per_1k_usd": null,
+    "price_output_per_1k_usd": null,
+    "tokenizer_reference": null,
+    "smoke": {
+      "json_request_checked_at": null,
+      "context_window_confirmed_min_16000": null
+    }
+  },
+
+  "stt": {
+    "provider": null,
+    "model": null,
+    "endpoint": null,
+    "api_key_env": "STT_API_KEY",
+    "language": "ru",
+    "accepted_input_formats": null,
+    "requires_pcm_conversion": null,
+    "region": null,
+    "data_retention_terms": null,
+    "quota_concurrent": null,
+    "price_per_minute_usd": null,
+    "smoke": {
+      "russian_ogg_opus_checked_at": null
+    }
+  },
+
+  "tts": {
+    "provider": null,
+    "model": null,
+    "endpoint": null,
+    "api_key_env": "TTS_API_KEY",
+    "language": "ru",
+    "output_format": "ogg_opus",
+    "voice": null,
+    "region": null,
+    "data_retention_terms": null,
+    "quota_concurrent": null,
+    "price_per_1k_chars_usd": null,
+    "smoke": {
+      "russian_ogg_opus_checked_at": null
+    }
+  },
+
+  "rules": {
+    "max_provider_calls_per_operation": 2,
+    "retry_on": ["http_429", "http_5xx", "network_timeout"],
+    "no_retry_on": ["http_400", "http_401", "http_403"],
+    "unknown_result_cost_reserve_released": false,
+    "user_answer_goes_in_user_message_only": true,
+    "telegram_identifiers_sent_to_provider": false
+  }
+}

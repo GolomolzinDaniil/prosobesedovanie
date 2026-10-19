@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "billing_enabled": false,
+  "currency": "XTR",
+  "note": "Рублёвые значения — ориентиры позиционирования из бизнес-гипотезы, не готовые цены Telegram. XTR-цены утверждаются владельцем до включения оплаты; автоматического пересчёта рублей в Stars нет. Пример 75 XTR в contracts/examples/successful-payment.json служит только проверке формата.",
+  "products": [
+    {
+      "product_id": "single",
+      "title_ru": "Одна тренировка",
+      "units": 1,
+      "price_rub_reference": 149,
+      "price_xtr": null
+    },
+    {
+      "product_id": "pack5",
+      "title_ru": "Пакет на 5 тренировок",
+      "units": 5,
+      "price_rub_reference": 599,
+      "price_xtr": null
+    },
+    {
+      "product_id": "pack10",
+      "title_ru": "Пакет на 10 тренировок",
+      "units": 10,
+      "price_rub_reference": 990,
+      "price_xtr": null
+    }
+  ],
+  "refund_policy": {
+    "auto_refund": "only_fully_unused_pack",
+    "partial_pack": "manual_operator_decision",
+    "unknown_result": "hold_refund_pending_until_reconciliation"
+  }
+}

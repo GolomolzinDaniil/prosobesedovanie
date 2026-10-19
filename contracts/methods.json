@@ -1,0 +1,93 @@
+{
+  "version": "2.0",
+  "note": "Перечень внутренних методов и моделей (§3.1). Все методы получают доверенный Context (request_id, actor_user_id, update_id); actor_user_id определяется сервером по Telegram from.id и никогда не берётся из клиентского тела. Каждый метод проверяет владельца: session_id/turn_id сами по себе доступ не дают. Ответ StartResponse — общее успешное представление состояния сессии, применяется также к status/cancel/skip/voice.",
+  "context_model": "Context",
+  "error_response_model": "ErrorResponse",
+  "methods": [
+    {
+      "name": "start_session",
+      "request": "StartSession",
+      "response": "StartResponse",
+      "preconditions": ["согласие подтверждено", "нет активной сессии", "доступна попытка (credit)"],
+      "effects": ["резерв попытки", "создание сессии", "первый вопрос из каталога"]
+    },
+    {
+      "name": "submit_answer",
+      "request": "SubmitAnswer",
+      "response": "AnswerResponse",
+      "preconditions": ["статус awaiting_answer", "reply на подтверждённый message_id текущего вопроса"],
+      "effects": ["сохранение ответа и assess-задания в одной транзакции", "статус evaluating"]
+    },
+    {
+      "name": "submit_voice",
+      "request": "VoiceMessage",
+      "response": "StartResponse",
+      "preconditions": ["формат сессии voice", "текущий вопрос доставлен"],
+      "effects": ["статус transcribing", "STT-задание", "черновик расшифровки"]
+    },
+    {
+      "name": "confirm_transcript",
+      "request": "ConfirmTranscript",
+      "response": "AnswerResponse",
+      "preconditions": ["статус confirming_transcript", "transcript_version совпала с актуальной"],
+      "effects": ["итоговый текст валидируется и принимается как ответ"]
+    },
+    {
+      "name": "skip_turn",
+      "request": "TurnCommand",
+      "response": "StartResponse",
+      "preconditions": ["статус awaiting_answer или confirming_transcript"],
+      "effects": ["пропуск записан (answer_text=null, оценки нет)", "следующий вопрос или отчёт"]
+    },
+    {
+      "name": "finish_session",
+      "request": "SessionCommand",
+      "response": "StartResponse",
+      "preconditions": ["хотя бы один принятый ответ"],
+      "effects": ["reporting либо requested_action=finish до окончания текущей оценки"]
+    },
+    {
+      "name": "cancel_session",
+      "request": "SessionCommand",
+      "response": "StartResponse",
+      "preconditions": ["до delivery_started_at отчёта"],
+      "effects": ["статус cancelled", "резерв попытки освобождён"]
+    },
+    {
+      "name": "get_status",
+      "request": "SessionCommand",
+      "response": "StartResponse",
+      "preconditions": ["владелец сессии"],
+      "effects": ["текущий SessionView без нового AI-вызова"]
+    },
+    {
+      "name": "get_report",
+      "request": "SessionCommand",
+      "response": "ReportResponse",
+      "preconditions": ["сохранённый отчёт доступен (не истёк срок хранения)"],
+      "effects": ["возврат сохранённых JSON и частей текста без нового LLM-вызова и без новой оплаты"]
+    },
+    {
+      "name": "get_balance",
+      "request": "{}",
+      "response": "BalanceResponse",
+      "preconditions": ["доверенный Context"],
+      "effects": ["available, reserved, trial_used"]
+    },
+    {
+      "name": "confirm_delete",
+      "request": "ConfirmAction",
+      "response": "DeleteResponse",
+      "preconditions": ["одноразовый токен удаления (срок 5 минут)"],
+      "effects": ["accepted=true", "deletion_requested_at", "срок завершения до 24 часов"]
+    },
+    {
+      "name": "create_invoice",
+      "request": "CreateInvoice",
+      "response": "InvoiceResponse",
+      "preconditions": ["коммерческий этап включён", "условия приняты"],
+      "effects": ["pending-заказ", "order_id", "XTR-сумма", "единицы", "непрозрачный payload"],
+      "stage": "commercial"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "$defs": {
+    "TurnKind": {
+      "description": "Позиция вопроса в плане: основной или уточнение (§2.3).",
+      "enum": [
+        "main",
+        "follow_up"
+      ],
+      "title": "TurnKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "ordinal": {
+      "minimum": 1,
+      "title": "Ordinal",
+      "type": "integer"
+    },
+    "kind": {
+      "$ref": "#/$defs/TurnKind"
+    },
+    "main_index": {
+      "anyOf": [
+        {
+          "maximum": 6,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Main Index"
+    },
+    "topic": {
+      "title": "Topic",
+      "type": "string"
+    },
+    "question_text": {
+      "maxLength": 700,
+      "minLength": 1,
+      "title": "Question Text",
+      "type": "string"
+    },
+    "difficulty": {
+      "anyOf": [
+        {
+          "maximum": 3,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Difficulty"
+    },
+    "delivered_message_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Delivered Message Id"
+    }
+  },
+  "required": [
+    "turn_id",
+    "ordinal",
+    "kind",
+    "topic",
+    "question_text"
+  ],
+  "title": "TurnView",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

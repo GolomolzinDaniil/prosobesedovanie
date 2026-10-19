@@ -1,0 +1,98 @@
+{
+  "$defs": {
+    "TurnScores": {
+      "additionalProperties": false,
+      "properties": {
+        "relevance": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Relevance",
+          "type": "integer"
+        },
+        "structure": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Structure",
+          "type": "integer"
+        },
+        "correctness": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correctness"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        }
+      },
+      "required": [
+        "relevance",
+        "structure"
+      ],
+      "title": "TurnScores",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "topic": {
+      "minLength": 1,
+      "title": "Topic",
+      "type": "string"
+    },
+    "scores": {
+      "$ref": "#/$defs/TurnScores"
+    },
+    "missing_points": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Points",
+      "type": "array"
+    },
+    "brief_explanation": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Brief Explanation"
+    }
+  },
+  "required": [
+    "turn_id",
+    "topic",
+    "scores"
+  ],
+  "title": "PreviousAssessmentBrief",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "text": {
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    },
+    "uses_placeholders": {
+      "default": false,
+      "title": "Uses Placeholders",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "turn_id",
+    "text"
+  ],
+  "title": "ImprovedExample",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

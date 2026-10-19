@@ -1,0 +1,1050 @@
+{
+  "version": "2.0",
+  "note": "Эталоны AT04/AT10 (§3.11): 3 роли × 2 уровня × 3 качества = 18 наборов; каждый включает технический и HR-ответ, ожидаемые рубрики оценок, допустимые переходы по фиксированным правилам §3.3 и недопустимые выдуманные утверждения для отчёта. Наборы подготовлены разработчиком; предметная проверка рецензентом (2–4 ч) — условие запуска, статус в reviewer_status. Автоматическая JSON-проверка участие рецензента не подменяет.",
+  "sets": [
+    {
+      "id": "python-intern-weak",
+      "role_id": "python",
+      "level": "intern",
+      "quality": "weak",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Ну я студент, учусь на втором курсе. Выбрал Python, потому что он популярный и легко начать. Умею немного писать код, проходил курсы. Хочу найти стажировку, чтобы развиваться дальше.",
+        "technical_main3": "Ну коллекции это списки и словари. Использую list, чтобы хранить данные, а dict чтобы искать. Ещё есть tuple вроде. Точных подробностей не знаю, просто пользуюсь ими в коде.",
+        "follow_up": "Уточню про словари: dict хранит пары ключ-значение, ключ должен быть хешируемым — например строка, число или кортеж. Поиск по ключу быстрый, в среднем O(1), потому что это хеш-таблица. Для проверки вхождения элемента использую set — тоже O(1)."
+      },
+      "technical_topic": "collections",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 2,
+          "structure": 2,
+          "evidence": 1,
+          "missing_points": [
+            "Конкретные факты об учёбе и реальной практике",
+            "Названы инструменты, которыми кандидат действительно пользовался"
+          ]
+        },
+        "technical_main3": {
+          "relevance": 2,
+          "structure": 2,
+          "correctness": 1,
+          "missing_points": [
+            "Сложность операций поиска в list и dict",
+            "Когда выбирать set и tuple, примеры из collections"
+          ]
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "follow_up",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "follow_up",
+          "next_difficulty": 1
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт коммерческой разработки",
+          "глубокое знание всех коллекций стандартной библиотеки",
+          "опыт работы с высоконагруженными системами"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "python-intern-medium",
+      "role_id": "python",
+      "level": "intern",
+      "quality": "medium",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Я студент второго курса прикладной информатики. Полтора года пишу на Python: начинал с курсов по синтаксису, потом сделал два учебных проекта — телеграм-бот для расписания и парсер объявлений с сохранением в SQLite. Ищу первую стажировку, чтобы научиться работать в команде над реальным продуктом и перенять практики код-ревью.",
+        "technical_main3": "В Python использую list для последовательностей, dict для пар ключ-значение с быстрым поиском, tuple для неизменяемых данных и set для уникальных элементов. Выбираю коллекцию по задаче: например, счётчики считаю через dict или collections.Counter.",
+        "follow_up": "Уточню про словари: dict хранит пары ключ-значение, ключ должен быть хешируемым — например строка, число или кортеж. Поиск по ключу быстрый, в среднем O(1), потому что это хеш-таблица. Для проверки вхождения элемента использую set — тоже O(1)."
+      },
+      "technical_topic": "collections",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 3,
+          "structure": 3,
+          "evidence": 3,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 3,
+          "structure": 3,
+          "correctness": 3,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 2
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт коммерческой разработки в продакшене",
+          "глубокое знание асинхронного программирования",
+          "опыт проектирования архитектуры сервисов"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "python-intern-strong",
+      "role_id": "python",
+      "level": "intern",
+      "quality": "strong",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Учусь на третьем курсе прикладной информатики, в Python полтора года. Углублялся в язык: разбираюсь в коллекциях и их сложности, исключениях, областях видимости и декораторах. Сделал три законченных проекта: телеграм-бот расписания с интеграцией внешнего API, CLI-утилиту для обработки CSV и pet-проект с pytest-тестами. Регулярно читаю чужой код на GitHub и веду конспект ошибок. На стажировке хочу получить опыт промышленной разработки: код-ревью, CI, работа в команде по спринтам.",
+        "technical_main3": "Выбираю коллекцию осознанно: list даёт порядок и индексы, но поиск по значению линейный; dict и set — хеш-таблицы с доступом за O(1), поэтому для проверок вхождения беру set; tuple неизменяемы и подходят для ключей dict; для специфичных задач использую collections: Counter для подсчёта, defaultdict для значений по умолчанию, deque для очереди с добавлением и снятием с двух концов.",
+        "follow_up": "Уточню про словари: dict хранит пары ключ-значение, ключ должен быть хешируемым — например строка, число или кортеж. Поиск по ключу быстрый, в среднем O(1), потому что это хеш-таблица. Для проверки вхождения элемента использую set — тоже O(1)."
+      },
+      "technical_topic": "collections",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 4,
+          "structure": 4,
+          "evidence": 4,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 4,
+          "structure": 4,
+          "correctness": 4,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 2
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт разработки микросервисов на Django или FastAPI",
+          "опыт промышленной настройки CI/CD",
+          "опыт работы с базами данных в продакшене"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "python-junior-weak",
+      "role_id": "python",
+      "level": "junior",
+      "quality": "weak",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Ну я студент, учусь на втором курсе. Выбрал Python, потому что он популярный и легко начать. Умею немного писать код, проходил курсы. Хочу найти стажировку, чтобы развиваться дальше.",
+        "technical_main3": "Ну коллекции это списки и словари. Использую list, чтобы хранить данные, а dict чтобы искать. Ещё есть tuple вроде. Точных подробностей не знаю, просто пользуюсь ими в коде.",
+        "follow_up": "Уточню про словари: dict хранит пары ключ-значение, ключ должен быть хешируемым — например строка, число или кортеж. Поиск по ключу быстрый, в среднем O(1), потому что это хеш-таблица. Для проверки вхождения элемента использую set — тоже O(1)."
+      },
+      "technical_topic": "collections",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 2,
+          "structure": 2,
+          "evidence": 1,
+          "missing_points": [
+            "Конкретные факты об учёбе и реальной практике",
+            "Названы инструменты, которыми кандидат действительно пользовался"
+          ]
+        },
+        "technical_main3": {
+          "relevance": 2,
+          "structure": 2,
+          "correctness": 1,
+          "missing_points": [
+            "Сложность операций поиска в list и dict",
+            "Когда выбирать set и tuple, примеры из collections"
+          ]
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "follow_up",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "follow_up",
+          "next_difficulty": 1
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт коммерческой разработки",
+          "глубокое знание всех коллекций стандартной библиотеки",
+          "опыт работы с высоконагруженными системами"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "python-junior-medium",
+      "role_id": "python",
+      "level": "junior",
+      "quality": "medium",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Я студент второго курса прикладной информатики. Полтора года пишу на Python: начинал с курсов по синтаксису, потом сделал два учебных проекта — телеграм-бот для расписания и парсер объявлений с сохранением в SQLite. Ищу первую стажировку, чтобы научиться работать в команде над реальным продуктом и перенять практики код-ревью.",
+        "technical_main3": "В Python использую list для последовательностей, dict для пар ключ-значение с быстрым поиском, tuple для неизменяемых данных и set для уникальных элементов. Выбираю коллекцию по задаче: например, счётчики считаю через dict или collections.Counter.",
+        "follow_up": "Уточню про словари: dict хранит пары ключ-значение, ключ должен быть хешируемым — например строка, число или кортеж. Поиск по ключу быстрый, в среднем O(1), потому что это хеш-таблица. Для проверки вхождения элемента использую set — тоже O(1)."
+      },
+      "technical_topic": "collections",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 3,
+          "structure": 3,
+          "evidence": 3,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 3,
+          "structure": 3,
+          "correctness": 3,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 3
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт коммерческой разработки в продакшене",
+          "глубокое знание асинхронного программирования",
+          "опыт проектирования архитектуры сервисов"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "python-junior-strong",
+      "role_id": "python",
+      "level": "junior",
+      "quality": "strong",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Учусь на третьем курсе прикладной информатики, в Python полтора года. Углублялся в язык: разбираюсь в коллекциях и их сложности, исключениях, областях видимости и декораторах. Сделал три законченных проекта: телеграм-бот расписания с интеграцией внешнего API, CLI-утилиту для обработки CSV и pet-проект с pytest-тестами. Регулярно читаю чужой код на GitHub и веду конспект ошибок. На стажировке хочу получить опыт промышленной разработки: код-ревью, CI, работа в команде по спринтам.",
+        "technical_main3": "Выбираю коллекцию осознанно: list даёт порядок и индексы, но поиск по значению линейный; dict и set — хеш-таблицы с доступом за O(1), поэтому для проверок вхождения беру set; tuple неизменяемы и подходят для ключей dict; для специфичных задач использую collections: Counter для подсчёта, defaultdict для значений по умолчанию, deque для очереди с добавлением и снятием с двух концов.",
+        "follow_up": "Уточню про словари: dict хранит пары ключ-значение, ключ должен быть хешируемым — например строка, число или кортеж. Поиск по ключу быстрый, в среднем O(1), потому что это хеш-таблица. Для проверки вхождения элемента использую set — тоже O(1)."
+      },
+      "technical_topic": "collections",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 4,
+          "structure": 4,
+          "evidence": 4,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 4,
+          "structure": 4,
+          "correctness": 4,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 3
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт разработки микросервисов на Django или FastAPI",
+          "опыт промышленной настройки CI/CD",
+          "опыт работы с базами данных в продакшене"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "analyst-intern-weak",
+      "role_id": "analyst",
+      "level": "intern",
+      "quality": "weak",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Я учусь на экономиста, решила пойти в аналитики, потому что это востребовано. Знаю Excel, пробовала SQL на курсах. Хочу стажировку для опыта.",
+        "technical_main3": "Данные фильтрую в Excel, а в SQL только SELECT * делаю. WHERE где-то ставила, но путаюсь с HAVING и не знаю, чем они отличаются.",
+        "follow_up": "Уточню про HAVING: его применяю после GROUP BY, когда условие наложено на агрегат — например, оставляю только группы с суммой больше ста тысяч. В WHERE такое условие не сработает, потому что агрегатов там ещё нет."
+      },
+      "technical_topic": "sql_filtering",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 2,
+          "structure": 2,
+          "evidence": 1,
+          "missing_points": [
+            "Конкретные проекты и инструменты с фактами использования",
+            "Понятная мотивация и цель стажировки"
+          ]
+        },
+        "technical_main3": {
+          "relevance": 2,
+          "structure": 2,
+          "correctness": 1,
+          "missing_points": [
+            "Различие WHERE и HAVING с примерами",
+            "Обработка NULL и диапазонов дат при фильтрации"
+          ]
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "follow_up",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "follow_up",
+          "next_difficulty": 1
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт работы с оконными функциями",
+          "уверенное владение Python и pandas",
+          "опыт расчёта продуктовых бизнес-метрик"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "analyst-intern-medium",
+      "role_id": "analyst",
+      "level": "intern",
+      "quality": "medium",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Студентка третьего курса экономики. Год занимаюсь анализом данных: Excel на уровне сводных таблиц, SQL пишу выборки с джойнами и агрегацией, начала изучать Python — pandas для очистки данных. На учебном проекте анализировала продажи небольшого магазина: собирала данные из CRM, строила дашборд по динамике выручки. Ищу стажировку, чтобы применять SQL и визуализацию на реальных данных.",
+        "technical_main3": "Фильтрацию делаю в WHERE до агрегации: условия на столбцы и даты, IN для списков, BETWEEN для диапазонов. HAVING применяю после GROUP BY, когда нужно отфильтровать агрегированные значения, например COUNT больше десяти.",
+        "follow_up": "Уточню про HAVING: его применяю после GROUP BY, когда условие наложено на агрегат — например, оставляю только группы с суммой больше ста тысяч. В WHERE такое условие не сработает, потому что агрегатов там ещё нет."
+      },
+      "technical_topic": "sql_filtering",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 3,
+          "structure": 3,
+          "evidence": 3,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 3,
+          "structure": 3,
+          "correctness": 3,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 2
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт когортного анализа и сегментации",
+          "уверенное построение дашбордов в Tableau",
+          "опыт работы с оконными функциями SQL"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "analyst-intern-strong",
+      "role_id": "analyst",
+      "level": "intern",
+      "quality": "strong",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Заканчиваю бакалавриат по бизнес-информатике. Полтора года в анализе данных: SQL на уверенном уровне — джойны, оконные функции, оптимизация тяжёлых запросов; Python — pandas, numpy, базовый matplotlib; Tableau для дашбордов. Сделала два проекта: анализ оттока клиентов телеком-оператора с когортным анализом и сегментацией и дашборд продаж с оповещениями об аномалиях. Понимаю продуктовые метрики: LTV, retention, конверсии. На стажировке хочу участвовать в полном цикле — от постановки вопроса до выводов для бизнеса.",
+        "technical_main3": "Разделяю фильтрацию строк и групп: WHERE работает до GROUP BY и не видит агрегаты, HAVING — после. Для дат использую полуинтервалы больше-равно и меньше вместо BETWEEN, чтобы не терять границы; NULL проверяю явно IS NULL, так как сравнения с NULL дают UNKNOWN; для подзапросов предпочитаю EXISTS вместо IN ради производительности на больших таблицах.",
+        "follow_up": "Уточню про HAVING: его применяю после GROUP BY, когда условие наложено на агрегат — например, оставляю только группы с суммой больше ста тысяч. В WHERE такое условие не сработает, потому что агрегатов там ещё нет."
+      },
+      "technical_topic": "sql_filtering",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 4,
+          "structure": 4,
+          "evidence": 4,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 4,
+          "structure": 4,
+          "correctness": 4,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 2
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт постановки и анализа A/B-экспериментов",
+          "опыт построения моделей машинного обучения",
+          "опыт промышленной разработки ETL в Airflow"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "analyst-junior-weak",
+      "role_id": "analyst",
+      "level": "junior",
+      "quality": "weak",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Я учусь на экономиста, решила пойти в аналитики, потому что это востребовано. Знаю Excel, пробовала SQL на курсах. Хочу стажировку для опыта.",
+        "technical_main3": "Данные фильтрую в Excel, а в SQL только SELECT * делаю. WHERE где-то ставила, но путаюсь с HAVING и не знаю, чем они отличаются.",
+        "follow_up": "Уточню про HAVING: его применяю после GROUP BY, когда условие наложено на агрегат — например, оставляю только группы с суммой больше ста тысяч. В WHERE такое условие не сработает, потому что агрегатов там ещё нет."
+      },
+      "technical_topic": "sql_filtering",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 2,
+          "structure": 2,
+          "evidence": 1,
+          "missing_points": [
+            "Конкретные проекты и инструменты с фактами использования",
+            "Понятная мотивация и цель стажировки"
+          ]
+        },
+        "technical_main3": {
+          "relevance": 2,
+          "structure": 2,
+          "correctness": 1,
+          "missing_points": [
+            "Различие WHERE и HAVING с примерами",
+            "Обработка NULL и диапазонов дат при фильтрации"
+          ]
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "follow_up",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "follow_up",
+          "next_difficulty": 1
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт работы с оконными функциями",
+          "уверенное владение Python и pandas",
+          "опыт расчёта продуктовых бизнес-метрик"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "analyst-junior-medium",
+      "role_id": "analyst",
+      "level": "junior",
+      "quality": "medium",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Студентка третьего курса экономики. Год занимаюсь анализом данных: Excel на уровне сводных таблиц, SQL пишу выборки с джойнами и агрегацией, начала изучать Python — pandas для очистки данных. На учебном проекте анализировала продажи небольшого магазина: собирала данные из CRM, строила дашборд по динамике выручки. Ищу стажировку, чтобы применять SQL и визуализацию на реальных данных.",
+        "technical_main3": "Фильтрацию делаю в WHERE до агрегации: условия на столбцы и даты, IN для списков, BETWEEN для диапазонов. HAVING применяю после GROUP BY, когда нужно отфильтровать агрегированные значения, например COUNT больше десяти.",
+        "follow_up": "Уточню про HAVING: его применяю после GROUP BY, когда условие наложено на агрегат — например, оставляю только группы с суммой больше ста тысяч. В WHERE такое условие не сработает, потому что агрегатов там ещё нет."
+      },
+      "technical_topic": "sql_filtering",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 3,
+          "structure": 3,
+          "evidence": 3,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 3,
+          "structure": 3,
+          "correctness": 3,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 3
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт когортного анализа и сегментации",
+          "уверенное построение дашбордов в Tableau",
+          "опыт работы с оконными функциями SQL"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "analyst-junior-strong",
+      "role_id": "analyst",
+      "level": "junior",
+      "quality": "strong",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Заканчиваю бакалавриат по бизнес-информатике. Полтора года в анализе данных: SQL на уверенном уровне — джойны, оконные функции, оптимизация тяжёлых запросов; Python — pandas, numpy, базовый matplotlib; Tableau для дашбордов. Сделала два проекта: анализ оттока клиентов телеком-оператора с когортным анализом и сегментацией и дашборд продаж с оповещениями об аномалиях. Понимаю продуктовые метрики: LTV, retention, конверсии. На стажировке хочу участвовать в полном цикле — от постановки вопроса до выводов для бизнеса.",
+        "technical_main3": "Разделяю фильтрацию строк и групп: WHERE работает до GROUP BY и не видит агрегаты, HAVING — после. Для дат использую полуинтервалы больше-равно и меньше вместо BETWEEN, чтобы не терять границы; NULL проверяю явно IS NULL, так как сравнения с NULL дают UNKNOWN; для подзапросов предпочитаю EXISTS вместо IN ради производительности на больших таблицах.",
+        "follow_up": "Уточню про HAVING: его применяю после GROUP BY, когда условие наложено на агрегат — например, оставляю только группы с суммой больше ста тысяч. В WHERE такое условие не сработает, потому что агрегатов там ещё нет."
+      },
+      "technical_topic": "sql_filtering",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 4,
+          "structure": 4,
+          "evidence": 4,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 4,
+          "structure": 4,
+          "correctness": 4,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 3
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт постановки и анализа A/B-экспериментов",
+          "опыт построения моделей машинного обучения",
+          "опыт промышленной разработки ETL в Airflow"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "qa-intern-weak",
+      "role_id": "qa",
+      "level": "intern",
+      "quality": "weak",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Хочу стать тестировщиком, потому что вход в ИТ легче всего через QA. Прошёл курсы по тестированию, знаю что такое баг и тест-кейс. Ищу первую работу.",
+        "technical_main3": "Тесты пишу по интуиции, проверяю что всё работает. Классы эквивалентности и граничные значения где-то слышал, но в работе не применяю.",
+        "follow_up": "Уточню про граничные значения: для поля возраст от 18 до 65 проверю 17, 18, 65 и 66 плюс одно значение внутри диапазона. Это минимальный набор, который ловит большинство ошибок на границах."
+      },
+      "technical_topic": "test_design",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 2,
+          "structure": 2,
+          "evidence": 1,
+          "missing_points": [
+            "Конкретный опыт: что именно тестировал и какими инструментами",
+            "Понимание места QA в процессе разработки"
+          ]
+        },
+        "technical_main3": {
+          "relevance": 2,
+          "structure": 2,
+          "correctness": 1,
+          "missing_points": [
+            "Названные техники тест-дизайна с примерами применения",
+            "Структура тест-кейса и приоритизация"
+          ]
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "follow_up",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "follow_up",
+          "next_difficulty": 1
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт тестирования API",
+          "опыт автоматизации тестирования",
+          "опыт написания тест-кейсов на реальных проектах"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "qa-intern-medium",
+      "role_id": "qa",
+      "level": "intern",
+      "quality": "medium",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Учусь на третьем курсе ИТ-факультета, полгода занимаюсь тестированием. Прошёл курс по QA: тест-дизайн, баг-репорты, работа в Trello и TestRail. Тестировал учебное веб-приложение: писал тест-кейсы на регистрацию и корзину, находил и описывал баги с шагами и скриншотами. Осваиваю Postman для проверки API. Хочу на стажировку, чтобы научиться тестировать в команде с разработчиками.",
+        "technical_main3": "Применяю техники тест-дизайна: классы эквивалентности делю на валидные и невалидные, граничные значения проверяю на границах диапазона, для форм — обязательные поля и форматы. Тест-кейсы пишу с предусловием, шагами и ожидаемым результатом.",
+        "follow_up": "Уточню про граничные значения: для поля возраст от 18 до 65 проверю 17, 18, 65 и 66 плюс одно значение внутри диапазона. Это минимальный набор, который ловит большинство ошибок на границах."
+      },
+      "technical_topic": "test_design",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 3,
+          "structure": 3,
+          "evidence": 3,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 3,
+          "structure": 3,
+          "correctness": 3,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 2
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт автоматизации тестирования кодом",
+          "опыт тестирования мобильных приложений",
+          "опыт нагрузочного тестирования"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "qa-intern-strong",
+      "role_id": "qa",
+      "level": "intern",
+      "quality": "strong",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Студент четвёртого курса, год занимаюсь тестированием на учебных и фриланс-проектах. Владею техниками тест-дизайна, пишу баг-репорты с воспроизводимыми шагами, тестирую API через Postman и Swagger, начал автоматизировать на Python и pytest простые проверки интерфейса. Вёл тестирование двух проектов: интернет-магазин с регрессией релизов и чек-листами и мобильное приложение со smoke и sanity проверками перед выкаткой. Понимаю место QA в процессе: от требований до приёмки. На стажировке хочу углубиться в API-тестирование и автоматизацию.",
+        "technical_main3": "Комбинирую техники: для числовых полей — границы и классы эквивалентности, для логики — таблицы решений и pairwise для сокращения комбинаций, для сценариев — пользовательские истории с альтернативными ветками. Каждый тест-кейс атомарен, с чётким предусловием и ожидаемым результатом; приоритизирую по рискам и частоте использования функции.",
+        "follow_up": "Уточню про граничные значения: для поля возраст от 18 до 65 проверю 17, 18, 65 и 66 плюс одно значение внутри диапазона. Это минимальный набор, который ловит большинство ошибок на границах."
+      },
+      "technical_topic": "test_design",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 4,
+          "structure": 4,
+          "evidence": 4,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 4,
+          "structure": 4,
+          "correctness": 4,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 2
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт построения фреймворка автоматизации с нуля",
+          "опыт нагрузочного тестирования и тестирования безопасности",
+          "опыт менторства других тестировщиков"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "qa-junior-weak",
+      "role_id": "qa",
+      "level": "junior",
+      "quality": "weak",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Хочу стать тестировщиком, потому что вход в ИТ легче всего через QA. Прошёл курсы по тестированию, знаю что такое баг и тест-кейс. Ищу первую работу.",
+        "technical_main3": "Тесты пишу по интуиции, проверяю что всё работает. Классы эквивалентности и граничные значения где-то слышал, но в работе не применяю.",
+        "follow_up": "Уточню про граничные значения: для поля возраст от 18 до 65 проверю 17, 18, 65 и 66 плюс одно значение внутри диапазона. Это минимальный набор, который ловит большинство ошибок на границах."
+      },
+      "technical_topic": "test_design",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 2,
+          "structure": 2,
+          "evidence": 1,
+          "missing_points": [
+            "Конкретный опыт: что именно тестировал и какими инструментами",
+            "Понимание места QA в процессе разработки"
+          ]
+        },
+        "technical_main3": {
+          "relevance": 2,
+          "structure": 2,
+          "correctness": 1,
+          "missing_points": [
+            "Названные техники тест-дизайна с примерами применения",
+            "Структура тест-кейса и приоритизация"
+          ]
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "follow_up",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "follow_up",
+          "next_difficulty": 1
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт тестирования API",
+          "опыт автоматизации тестирования",
+          "опыт написания тест-кейсов на реальных проектах"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "qa-junior-medium",
+      "role_id": "qa",
+      "level": "junior",
+      "quality": "medium",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Учусь на третьем курсе ИТ-факультета, полгода занимаюсь тестированием. Прошёл курс по QA: тест-дизайн, баг-репорты, работа в Trello и TestRail. Тестировал учебное веб-приложение: писал тест-кейсы на регистрацию и корзину, находил и описывал баги с шагами и скриншотами. Осваиваю Postman для проверки API. Хочу на стажировку, чтобы научиться тестировать в команде с разработчиками.",
+        "technical_main3": "Применяю техники тест-дизайна: классы эквивалентности делю на валидные и невалидные, граничные значения проверяю на границах диапазона, для форм — обязательные поля и форматы. Тест-кейсы пишу с предусловием, шагами и ожидаемым результатом.",
+        "follow_up": "Уточню про граничные значения: для поля возраст от 18 до 65 проверю 17, 18, 65 и 66 плюс одно значение внутри диапазона. Это минимальный набор, который ловит большинство ошибок на границах."
+      },
+      "technical_topic": "test_design",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 3,
+          "structure": 3,
+          "evidence": 3,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 3,
+          "structure": 3,
+          "correctness": 3,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 3
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт автоматизации тестирования кодом",
+          "опыт тестирования мобильных приложений",
+          "опыт нагрузочного тестирования"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    },
+    {
+      "id": "qa-junior-strong",
+      "role_id": "qa",
+      "level": "junior",
+      "quality": "strong",
+      "reviewer_status": "pending",
+      "answers": {
+        "hr_self_introduction": "Студент четвёртого курса, год занимаюсь тестированием на учебных и фриланс-проектах. Владею техниками тест-дизайна, пишу баг-репорты с воспроизводимыми шагами, тестирую API через Postman и Swagger, начал автоматизировать на Python и pytest простые проверки интерфейса. Вёл тестирование двух проектов: интернет-магазин с регрессией релизов и чек-листами и мобильное приложение со smoke и sanity проверками перед выкаткой. Понимаю место QA в процессе: от требований до приёмки. На стажировке хочу углубиться в API-тестирование и автоматизацию.",
+        "technical_main3": "Комбинирую техники: для числовых полей — границы и классы эквивалентности, для логики — таблицы решений и pairwise для сокращения комбинаций, для сценариев — пользовательские истории с альтернативными ветками. Каждый тест-кейс атомарен, с чётким предусловием и ожидаемым результатом; приоритизирую по рискам и частоте использования функции.",
+        "follow_up": "Уточню про граничные значения: для поля возраст от 18 до 65 проверю 17, 18, 65 и 66 плюс одно значение внутри диапазона. Это минимальный набор, который ловит большинство ошибок на границах."
+      },
+      "technical_topic": "test_design",
+      "expected_assessment": {
+        "hr_self_introduction": {
+          "relevance": 4,
+          "structure": 4,
+          "evidence": 4,
+          "missing_points": []
+        },
+        "technical_main3": {
+          "relevance": 4,
+          "structure": 4,
+          "correctness": 4,
+          "missing_points": []
+        },
+        "follow_up": {
+          "relevance": 3,
+          "structure": 3,
+          "topic": 3,
+          "missing_points": []
+        }
+      },
+      "expected_transitions": {
+        "hr_self_introduction": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        },
+        "technical_main3": {
+          "action": "next_topic",
+          "next_difficulty": 3
+        },
+        "follow_up": {
+          "action": "next_topic",
+          "difficulty_delta": 0
+        }
+      },
+      "report_constraints": {
+        "forbidden_claims": [
+          "опыт построения фреймворка автоматизации с нуля",
+          "опыт нагрузочного тестирования и тестирования безопасности",
+          "опыт менторства других тестировщиков"
+        ],
+        "actions_min": 1,
+        "actions_max": 3
+      }
+    }
+  ]
+}

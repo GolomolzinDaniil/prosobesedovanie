@@ -1,0 +1,41 @@
+{
+  "additionalProperties": false,
+  "description": "Наблюдение (сильная сторона либо ошибка/пробел). Для пропуска quote=null, skipped=true.",
+  "properties": {
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "quote": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Quote"
+    },
+    "skipped": {
+      "default": false,
+      "title": "Skipped",
+      "type": "boolean"
+    },
+    "comment": {
+      "minLength": 1,
+      "title": "Comment",
+      "type": "string"
+    }
+  },
+  "required": [
+    "turn_id",
+    "comment"
+  ],
+  "title": "ReportFinding",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

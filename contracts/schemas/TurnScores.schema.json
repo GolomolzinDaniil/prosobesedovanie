@@ -1,0 +1,52 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "relevance": {
+      "maximum": 4,
+      "minimum": 0,
+      "title": "Relevance",
+      "type": "integer"
+    },
+    "structure": {
+      "maximum": 4,
+      "minimum": 0,
+      "title": "Structure",
+      "type": "integer"
+    },
+    "correctness": {
+      "anyOf": [
+        {
+          "maximum": 4,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Correctness"
+    },
+    "evidence": {
+      "anyOf": [
+        {
+          "maximum": 4,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence"
+    }
+  },
+  "required": [
+    "relevance",
+    "structure"
+  ],
+  "title": "TurnScores",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

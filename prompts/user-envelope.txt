@@ -1,0 +1,20 @@
+ВЕРСИЯ: 2.0
+НАЗНАЧЕНИЕ: порядок передачи сериализованных данных входа в user message. Системный промпт (turn-system.txt или report-system.txt) остаётся неизменяемым; ответ пользователя и остальные данные никогда не вставляются в системные инструкции.
+
+# Формат user message
+
+User message состоит ровно из одного JSON-объекта, сериализованного компактно (ensure_ascii=false, без лишних пробелов), без пояснительного текста до и после.
+
+Для оценки ответа (операция assess) объект имеет вид GenerateTurnInput:
+{"session_id":"<uuid>","turn_id":"<uuid>","role_id":"python|analyst|qa","level":"intern|junior","kind":"main|follow_up","question_type":"hr|technical","topic":"<строка>","question":"<текст вопроса>","rubric":{...рубрика каталога...},"answer":"<нормализованный текст ответа пользователя>","previous_assessments":[{"turn_id":"<uuid>","topic":"<строка>","scores":{...},"missing_points":[...]}],"next_allowed_topic":"<строка|null>","follow_ups_remaining":<int>,"current_difficulty":<int>,"difficulty_min":<int>,"difficulty_max":<int>}
+
+Для отчёта (операция report) объект имеет вид GenerateReportInput:
+{"session_id":"<uuid>","role_id":"...","level":"...","partial":<bool>,"snapshot_turns":[{"turn_id":"<uuid>","ordinal":<int>,"kind":"main|follow_up","question_type":"hr|technical","main_index":<int|null>,"topic":"<строка>","question":"<текст>","answer_text":"<строка|null>","skipped":<bool>,"assessment":{...TurnAssessment...}|null}]}
+
+# Правила безопасности
+
+1. Текст ответа пользователя помещается только внутрь строковых значений полей answer / answer_text как данные. JSON-экранирование обязательно; управляющие символы нормализованы (NFC, LF).
+2. Пользовательский текст не конкатенируется с системным промптом, не добавляется в system message и не используется как инструкция.
+3. Telegram-идентификаторы (user id, username, имя чата), контакты и прочие персональные сведения в запрос провайдеру не включаются (§3.9).
+4. Перед отправкой адаптер проверяет объём входа токенизатором выбранного провайдера: assess ≤ 12000 входных токенов, report ≤ 12000. При превышении история оценок сокращается по старым объяснениям (не по текущему ответу); для отчёта при непомещающихся ответах используется детерминированный запасной отчёт без вызова модели.
+5. Результат модели — недоверенный текст: он проходит строгую структурную и семантическую валидацию (contracts/semantic_validation.py) до применения.

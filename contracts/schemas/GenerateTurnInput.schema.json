@@ -1,0 +1,244 @@
+{
+  "$defs": {
+    "Level": {
+      "enum": [
+        "intern",
+        "junior"
+      ],
+      "title": "Level",
+      "type": "string"
+    },
+    "PreviousAssessmentBrief": {
+      "additionalProperties": false,
+      "properties": {
+        "turn_id": {
+          "format": "uuid",
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "topic": {
+          "minLength": 1,
+          "title": "Topic",
+          "type": "string"
+        },
+        "scores": {
+          "$ref": "#/$defs/TurnScores"
+        },
+        "missing_points": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Points",
+          "type": "array"
+        },
+        "brief_explanation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Brief Explanation"
+        }
+      },
+      "required": [
+        "turn_id",
+        "topic",
+        "scores"
+      ],
+      "title": "PreviousAssessmentBrief",
+      "type": "object"
+    },
+    "QuestionType": {
+      "description": "Тип темы вопроса: HR или технический (§3.3). Определяет пару оценок.",
+      "enum": [
+        "hr",
+        "technical"
+      ],
+      "title": "QuestionType",
+      "type": "string"
+    },
+    "RoleId": {
+      "enum": [
+        "python",
+        "analyst",
+        "qa"
+      ],
+      "title": "RoleId",
+      "type": "string"
+    },
+    "TurnKind": {
+      "description": "Позиция вопроса в плане: основной или уточнение (§2.3).",
+      "enum": [
+        "main",
+        "follow_up"
+      ],
+      "title": "TurnKind",
+      "type": "string"
+    },
+    "TurnScores": {
+      "additionalProperties": false,
+      "properties": {
+        "relevance": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Relevance",
+          "type": "integer"
+        },
+        "structure": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Structure",
+          "type": "integer"
+        },
+        "correctness": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correctness"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        }
+      },
+      "required": [
+        "relevance",
+        "structure"
+      ],
+      "title": "TurnScores",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "session_id": {
+      "format": "uuid",
+      "title": "Session Id",
+      "type": "string"
+    },
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "role_id": {
+      "$ref": "#/$defs/RoleId"
+    },
+    "level": {
+      "$ref": "#/$defs/Level"
+    },
+    "kind": {
+      "$ref": "#/$defs/TurnKind"
+    },
+    "question_type": {
+      "$ref": "#/$defs/QuestionType"
+    },
+    "topic": {
+      "minLength": 1,
+      "title": "Topic",
+      "type": "string"
+    },
+    "question": {
+      "maxLength": 700,
+      "minLength": 1,
+      "title": "Question",
+      "type": "string"
+    },
+    "rubric": {
+      "additionalProperties": true,
+      "title": "Rubric",
+      "type": "object"
+    },
+    "answer": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Answer",
+      "type": "string"
+    },
+    "previous_assessments": {
+      "items": {
+        "$ref": "#/$defs/PreviousAssessmentBrief"
+      },
+      "maxItems": 7,
+      "title": "Previous Assessments",
+      "type": "array"
+    },
+    "next_allowed_topic": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Next Allowed Topic"
+    },
+    "follow_ups_remaining": {
+      "maximum": 2,
+      "minimum": 0,
+      "title": "Follow Ups Remaining",
+      "type": "integer"
+    },
+    "current_difficulty": {
+      "maximum": 3,
+      "minimum": 1,
+      "title": "Current Difficulty",
+      "type": "integer"
+    },
+    "difficulty_min": {
+      "maximum": 3,
+      "minimum": 1,
+      "title": "Difficulty Min",
+      "type": "integer"
+    },
+    "difficulty_max": {
+      "maximum": 3,
+      "minimum": 1,
+      "title": "Difficulty Max",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "session_id",
+    "turn_id",
+    "role_id",
+    "level",
+    "kind",
+    "question_type",
+    "topic",
+    "question",
+    "rubric",
+    "answer",
+    "follow_ups_remaining",
+    "current_difficulty",
+    "difficulty_min",
+    "difficulty_max"
+  ],
+  "title": "GenerateTurnInput",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

@@ -1,0 +1,18 @@
+{
+  "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708003",
+  "scores": {
+    "relevance": 3,
+    "structure": 3,
+    "correctness": null,
+    "evidence": 3
+  },
+  "missing_points": [
+    "Не названы конкретные инструменты проекта"
+  ],
+  "evidence_quotes": [
+    "В учебном проекте собирал данные опросов в Python и считал статистику"
+  ],
+  "explanation": "Есть конкретные факты об учёбе и проекте; мотивация понятна; детали инструментов стоит раскрыть.",
+  "suggested_action": "next_topic",
+  "next_question": null
+}

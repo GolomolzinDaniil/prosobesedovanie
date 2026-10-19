@@ -1,0 +1,38 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "storage_path": {
+      "minLength": 1,
+      "title": "Storage Path",
+      "type": "string"
+    },
+    "input_format": {
+      "enum": [
+        "ogg_opus",
+        "pcm_s16le"
+      ],
+      "title": "Input Format",
+      "type": "string"
+    },
+    "duration_seconds": {
+      "exclusiveMinimum": 0,
+      "maximum": 120,
+      "title": "Duration Seconds",
+      "type": "number"
+    },
+    "language": {
+      "const": "ru",
+      "default": "ru",
+      "title": "Language",
+      "type": "string"
+    }
+  },
+  "required": [
+    "storage_path",
+    "input_format",
+    "duration_seconds"
+  ],
+  "title": "GenerateSTTInput",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

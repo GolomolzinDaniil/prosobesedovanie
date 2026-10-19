@@ -1,0 +1,68 @@
+{
+  "version": "2.0",
+  "note": "Состояния сессии, переходы, guards и побочные действия (§2.4). Неусловленный переход возвращает BUSY либо STALE_ACTION. Версия сессии увеличивается при каждом изменении управления; jobs содержат expected_version; блокировки проверяют владельца, состояние и версию. Поздний LLM/STT/TTS-результат устаревшей версии отбрасывается и не может восстановить отменённую сессию или удалённый профиль.",
+  "initial_state": "preparing",
+  "terminal_states": ["completed", "cancelled", "expired", "failed"],
+  "unspecified_transition": ["BUSY", "STALE_ACTION"],
+  "transitions": {
+    "preparing": [
+      { "event": "form_first_question", "to": "delivering_question", "side_effects": ["первый вопрос из каталога без ожидания LLM"] },
+      { "event": "failure", "to": "failed", "side_effects": ["резерв попытки освобождается"] }
+    ],
+    "delivering_question": [
+      { "event": "question_delivered_confirmed", "to": "awaiting_answer", "guards": ["message_id сохранён после подтверждения Bot API"] },
+      { "event": "delivery_exhausted", "to": "failed", "side_effects": ["резерв попытки освобождается"] }
+    ],
+    "awaiting_answer": [
+      { "event": "answer_text", "to": "evaluating", "guards": ["reply на подтверждённый message_id текущего вопроса", "владелец", "версия"], "side_effects": ["ответ и assess-задание в одной транзакции"] },
+      { "event": "answer_voice", "to": "transcribing", "guards": ["формат сессии voice", "метаданные и размер потока"] },
+      { "event": "skip", "to": "delivering_question|reporting", "side_effects": ["пропуск записан: answer_text=null, оценки нет"] },
+      { "event": "finish", "to": "reporting", "guards": ["хотя бы один принятый ответ"], "side_effects": ["иначе NO_ANSWERS -> cancelled с освобождением резерва"] },
+      { "event": "cancel", "to": "cancelled", "side_effects": ["резерв попытки освобождается"] }
+    ],
+    "transcribing": [
+      { "event": "stt_result", "to": "confirming_transcript", "side_effects": ["черновик расшифровки", "transcript_version увеличена"] },
+      { "event": "stt_failed_or_rerecord", "to": "awaiting_answer", "side_effects": ["черновик не засчитан", "аудио удалено", "не более 3 запусков STT на вопрос"] },
+      { "event": "cancel", "to": "cancelled", "side_effects": ["резерв освобождается"] }
+    ],
+    "confirming_transcript": [
+      { "event": "confirm_transcript", "to": "evaluating", "guards": ["transcript_version совпал"], "side_effects": ["подтверждённый текст принят как ответ"] },
+      { "event": "edit_transcript", "to": "evaluating", "guards": ["исправленный текст прошёл те же проверки"], "side_effects": ["транзакция ответа и assess-задания"] },
+      { "event": "rerecord", "to": "awaiting_answer", "guards": ["лимит 3 запусков STT на вопрос не исчерпан"], "note": "ожидание новой записи; transcribing возникает при её получении" },
+      { "event": "skip", "to": "delivering_question|reporting", "side_effects": ["пропуск записан"] },
+      { "event": "cancel", "to": "cancelled", "side_effects": ["резерв освобождается"] }
+    ],
+    "evaluating": [
+      { "event": "assessment_applied_next_question", "to": "delivering_question", "guards": ["ожидаемая версия совпала под блокировкой"], "side_effects": ["оценка сохранена", "следующий вопрос или уточнение"] },
+      { "event": "assessment_applied_plan_complete_or_finish_requested", "to": "reporting", "guards": ["snapshot зафиксирован"] },
+      { "event": "finish_requested", "to": "evaluating", "side_effects": ["requested_action=finish; новая тема после окончания оценки не создаётся"] },
+      { "event": "cancel", "to": "cancelled", "side_effects": ["поздний результат устаревшей версии отбрасывается"] }
+    ],
+    "reporting": [
+      { "event": "report_delivered_all_parts", "to": "completed", "side_effects": ["credit reserved -> consumed атомарно с completed"] },
+      { "event": "cancel_before_first_delivery_attempt", "to": "cancelled", "guards": ["delivery_started_at is null"], "side_effects": ["резерв освобождается"] },
+      { "event": "cancel_after_delivery_started", "result": "BUSY", "note": "отчёт уже отправляется; отмена невозможна" },
+      { "event": "delivery_final_failure", "to": "failed", "side_effects": ["резерв освобождается независимо от видимой части"] }
+    ],
+    "completed": [
+      { "event": "status_or_report", "to": "completed", "note": "/status; /report если сохранён и доступен; новая сессия создаётся отдельно" }
+    ],
+    "cancelled": [
+      { "event": "status", "to": "cancelled", "note": "терминальное состояние не возобновляется" }
+    ],
+    "expired": [
+      { "event": "status", "to": "expired", "note": "терминальное состояние не возобновляется" }
+    ],
+    "failed": [
+      { "event": "status", "to": "failed", "note": "терминальное состояние не возобновляется" }
+    ]
+  },
+  "guards_global": [
+    "повтор update_id подтверждается без повторного выполнения команды",
+    "двойной ответ одному turn_id после первого принятия -> BUSY, без нового job и без перезаписи",
+    "отредактированные Telegram-сообщения не изменяют принятые ответы",
+    "callback привязан к владельцу и версии; старые кнопки не управляют новой сессией",
+    "неактивная сессия истекает через 24 часа после последнего принятого действия пользователя; фоновые повторы срок не продлевают",
+    "вопрос, принятый ответ и задание сохраняются до подтверждения в чате"
+  ]
+}

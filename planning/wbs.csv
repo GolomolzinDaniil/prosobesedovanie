@@ -1,0 +1,35 @@
+id,task,verifiable_result,hours,dependencies,type,part,status,where
+T01,Проверить доступы и профиль LLM/STT/TTS,Протокол smoke и необходимые квоты,3,,main,,условие запуска (внешние доступы),config/provider-profile.example.json; smoke-поля профиля
+T02,"Создать окружение, репозиторий, контейнеры и CI",Воспроизводимый локальный запуск,3,T01,main,1,готово,Dockerfile; docker-compose.yml; .github/workflows/ci.yml
+T03,Реализовать модель данных и миграции,Ограничения и индексы проходят проверки,4,T02,main,1,готово,migrations/0001_initial.sql; 0002_worker_indexes.sql; app/storage/
+T04,Подготовить каталог вопросов для 6 комбинаций,36 основных вопросов и рубрики,4,T02,main,1,готово (предметная вычитка — T21),config/questions.json; tests/unit/test_catalog.py
+T05,Зафиксировать промпты и эталонные примеры,Версии и критерии предметной проверки,4,T04,main,1,готово,prompts/; contracts/examples + manifest
+T06,"Реализовать webhook, inbox и дедупликацию",Повторы update не повторяют команду,4,T03,main,1,готово,app/api/routes/webhook.py; app/storage/inbox_repo.py; tests/integration/test_webhook.py
+T07,"Реализовать вход, согласие и выбор параметров","Роль, уровень и оба формата доступны",3,T06,main,2,готово,app/services/ui_flow.py; tests/integration/test_dialog_flow.py
+T08,"Реализовать состояния, старт и резерв попытки",Одна активная сессия и один резерв,5,T03;T07,main,2,готово,app/services/session_service.py; tests/integration/test_dialog_flow.py
+T09,Реализовать приём и нормализацию текста,Reply и граничные длины проверены,3,T08,main,2-3,готово,app/domain/answers.py; session_service.submit_answer_tx; tests
+T10,Реализовать worker lease и sender outbox,Восстановление после перезапуска,5,T06;T08,main,2,готово,app/workers/inbox_worker.py; outbox_worker.py; tests/unit/test_bot_adapter.py
+T11,Реализовать AI-адаптер и валидацию контрактов,JSON и доменные ограничения соблюдены,4,T02;T05,main,3,готово,app/providers/llm.py; app/services/token_budget.py; contracts/semantic_validation.py
+T12,Реализовать адаптацию и запасные переходы,Уточнения и сложность меняются по правилам,4,T09;T10,main,3,готово,app/services/assess_service.py; tests/integration/test_assessment_flow.py
+T13,Реализовать отчёт и доказательства по ответам,Нет выдуманных цитат и опыта,4,T12,main,4,готово,app/services/report_service.py; tests/integration/test_report_flow.py
+T14,Реализовать доставку отчёта и учёт попытки,Доставка всех частей и повторный /report,3,T10;T13,main,4,готово,report_service.on_report_part_delivered_tx; outbox_worker; tests
+T15,Реализовать приём аудио и ограничения,Безопасное скачивание и декодирование,3,T06;T08,main,4,готово,app/services/media_service.py; media_probe.py; tests/unit/test_media_service.py
+T16,Реализовать STT и подтверждение расшифровки,Исправление и перезапись без расхода turn,4,T11;T15,main,4,готово,app/providers/stt.py; app/services/voice_service.py; tests/integration/test_voice_flow.py
+T17,Реализовать TTS и возврат к тексту,Ошибка TTS не блокирует вопрос,3,T10;T16,main,4,готово,app/providers/tts.py; voice_service.process_tts_job; tests
+T18,"Реализовать cancel, expiry и удаление",Поздние результаты не восстанавливают данные,4,T14;T16,main,5,готово,app/services/lifecycle.py; tests/integration/test_lifecycle.py
+T19,"Реализовать лимиты, бюджет и метрики",Учёт всех попыток API и сигналов ошибок,3,T10;T11,main,5,готово,app/services/metrics.py; monitoring.py; scripts/check_signals.py; tests/integration/test_monitoring.py
+T20,"Проверить интеграцию, гонки и сбои",Сценарии AT05 AT06 AT07 AT08 AT15 проходят,6,T12;T14;T17;T18;T19,main,5,готово,tests/integration/test_acceptance.py
+T21,Провести проверку качества AI и исправить промпты,18 эталонов проверены с рецензентом,4,T04;T05;T12;T13;T16,main,5,наборы подготовлены; предметная проверка рецензентом — условие запуска,tests/references/reference_sets.json; tests/integration/test_reference_scenarios.py
+T22,"Проверить нагрузку, интерфейс и задержки",Протокол 20 сессий и Telegram клиентов,4,T20;T21,main,5,локальный протокол готов; staging с провайдерами и клиентами — условие запуска,scripts/load_test.py; planning/load-test-protocol.md; tests/integration/test_load_concurrency.py
+T23,"Развернуть staging, prod и проверить backup",Восстановление и smoke выполнены,4,T22,main,5,артефакты готовы; фактическое развёртывание — условие запуска,deploy/; scripts/set_webhook.py; backup.sh; restore.sh; smoke.py; planning/deploy-checklist.md
+T24,Подготовить передачу и провести встречу,Протокол с решениями и доступами,2,T23,main,5,материалы готовы; фактическая встреча — условие запуска (§5.3),planning/handoff-protocol.md; access-register.csv; verification/
+R01,Исправить интеграционные сбои после T20,Повторная проверка AT05-AT08/AT15,6,T20,reserve,5,резерв (не понадобился: сценарии проходят),tests/integration/test_acceptance.py
+R02,Исправить качество промптов и голосового сценария после T21,Повторная проверка AT03/AT04/AT10,6,T21,reserve,,резерв (блокируется рецензентом),prompts/; tests/references/
+R03,Исправить нагрузку и восстановление после T22/T23,Повторная проверка AT14/AT17,6,T22;T23,reserve,,резерв,scripts/load_test.py; restore.sh
+P01,"Каталог XTR, условия и invoice",Сценарии §3.8 проходят в staging,4,T24,commercial,,коммерческий этап (после функционального MVP),config/products.json; payments (схема)
+P02,Pre-checkout и контроль заказа,Сценарии §3.8 проходят в staging,4,P01,commercial,,коммерческий этап,-
+P03,"Оплата, начисление и баланс",Сценарии §3.8 проходят в staging,6,P02,commercial,,коммерческий этап,credits source=payment; /balance /buy
+P04,Возврат и защита прав пакета,Сценарии §3.8 проходят в staging,6,P03,commercial,,коммерческий этап,payments refund; charge_id
+P05,"Сверка, поддержка и платёжные тесты",Сценарии §3.11 проходят в staging,6,P04,commercial,,коммерческий этап,/terms /support /paysupport
+P06,Backup платного сервиса и выпуск,Сценарии §3.8/§3.11 проходят,4,P05,commercial,,коммерческий этап,scripts/backup.sh (платежный журнал)
+R04,Исправить оплату/возвраты после P05,Повторная проверка платёжных сценариев,6,P05,reserve,,резерв коммерческого этапа,-

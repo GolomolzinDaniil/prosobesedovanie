@@ -1,0 +1,57 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "ok": {
+      "const": true,
+      "title": "Ok",
+      "type": "boolean"
+    },
+    "order_id": {
+      "format": "uuid",
+      "title": "Order Id",
+      "type": "string"
+    },
+    "product_id": {
+      "enum": [
+        "single",
+        "pack5",
+        "pack10"
+      ],
+      "title": "Product Id",
+      "type": "string"
+    },
+    "currency": {
+      "const": "XTR",
+      "title": "Currency",
+      "type": "string"
+    },
+    "amount_xtr": {
+      "exclusiveMinimum": 0,
+      "title": "Amount Xtr",
+      "type": "integer"
+    },
+    "units": {
+      "exclusiveMinimum": 0,
+      "title": "Units",
+      "type": "integer"
+    },
+    "payload": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Payload",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ok",
+    "order_id",
+    "product_id",
+    "currency",
+    "amount_xtr",
+    "units",
+    "payload"
+  ],
+  "title": "InvoiceResponse",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

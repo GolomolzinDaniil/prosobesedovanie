@@ -1,0 +1,90 @@
+# Стартовое размещение (§3.10): один Linux-сервер, API, worker и PostgreSQL
+# в контейнерах, reverse proxy с TLS — перед API (внешний, HTTPS обязателен).
+# Dev/staging имеют отдельные боты и ключи. Секреты — через .env (env_file),
+# никогда не в репозитории.
+#
+# Запуск:
+#   cp config/.env.example .env && заполните секреты
+#   docker compose run --rm migrate          # миграции ролью migrator
+#   docker compose up -d db api              # API-процесс
+#   docker compose --profile workers up -d   # + worker (доменные обработчики — часть 2)
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: prosobesedovanie
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?задайте в .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # роли приложения/миграций/backup разделяются (§3.9)
+      - ./deploy/init-db-roles.sql:/docker-entrypoint-initdb.d/10-roles.sql:ro
+    logging: &logging
+      driver: json-file
+      options:
+        # технические логи ~14 дней (§3.9): ограничение объёма на контейнер
+        max-size: "20m"
+        max-file: "14"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d prosobesedovanie"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    # Доступ к БД через закрытую сеть: наружу порт не публикуется (§3.9)
+    expose:
+      - "5432"
+    networks: [internal]
+
+  migrate:
+    build: .
+    command: ["python", "-m", "app.storage.migrate"]
+    env_file: .env
+    environment:
+      MIGRATIONS_DATABASE_URL: postgresql://migrator:${MIGRATOR_PASSWORD:?задайте в .env}@db:5432/prosobesedovanie
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+    profiles: ["migrate"]
+    networks: [internal]
+
+  api:
+    build: .
+    command: ["python", "-m", "app.api.main"]
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      # Только loopback: публичный HTTPS терминирует reverse proxy с TLS
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - rundata:/var/lib/prosobesedovanie/run
+    logging: *logging
+    networks: [internal]
+
+  worker:
+    build: .
+    command: ["python", "-m", "app.workers.main"]
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    profiles: ["workers"]
+    volumes:
+      # heartbeat worker виден API/мониторингу (§3.10)
+      - rundata:/var/lib/prosobesedovanie/run
+    logging: *logging
+    networks: [internal]
+
+volumes:
+  pgdata:
+  rundata:
+
+networks:
+  internal:
+    driver: bridge

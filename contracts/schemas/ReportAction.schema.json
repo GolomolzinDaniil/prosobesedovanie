@@ -1,0 +1,36 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "priority": {
+      "maximum": 3,
+      "minimum": 1,
+      "title": "Priority",
+      "type": "integer"
+    },
+    "related_turn_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Related Turn Id"
+    },
+    "text": {
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "priority",
+    "text"
+  ],
+  "title": "ReportAction",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

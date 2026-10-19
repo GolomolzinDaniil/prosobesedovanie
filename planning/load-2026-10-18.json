@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "sessions": 20,
+    "voice_sessions": 4,
+    "completed": 20,
+    "stuck_jobs": 0,
+    "wall_seconds": 4.0
+  },
+  "stages": {
+    "first_text_question": {
+      "samples": 20,
+      "p50": 0.008,
+      "p95": 0.061,
+      "target_seconds": 5,
+      "within_slo": true
+    },
+    "action_ack": {
+      "samples": 36,
+      "p50": 0.004,
+      "p95": 0.931,
+      "target_seconds": 2,
+      "within_slo": true
+    },
+    "next_text_question": {
+      "samples": 36,
+      "p50": 0.699,
+      "p95": 1.447,
+      "target_seconds": 15,
+      "within_slo": true
+    },
+    "text_report": {
+      "samples": 20,
+      "p50": 0.466,
+      "p95": 0.536,
+      "target_seconds": 45,
+      "within_slo": true
+    },
+    "transcription": {
+      "samples": 4,
+      "p50": 0.864,
+      "p95": 0.9,
+      "target_seconds": 45,
+      "within_slo": true
+    },
+    "voiced_question": {
+      "samples": 4,
+      "p50": 1.149,
+      "p95": 1.166,
+      "target_seconds": 60,
+      "within_slo": true
+    }
+  }
+}

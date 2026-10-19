@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: prosob_test
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app_dev_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U app -d prosob_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 12
+    env:
+      TEST_DATABASE_URL: postgresql://app:app_dev_password@127.0.0.1:5432/prosob_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install dependencies (pinned)
+        run: pip install -r requirements-dev.txt
+      - name: Lint (ruff)
+        run: ruff check .
+      - name: Test
+        run: pytest -q
+      - name: Verify examples reproducibility
+        run: |
+          python scripts/make_examples.py
+          python scripts/export_schemas.py
+          git diff --exit-code contracts/examples contracts/schemas
+      - name: Verify spec package consistency (§5.1)
+        run: python verification/verify_spec.py --check

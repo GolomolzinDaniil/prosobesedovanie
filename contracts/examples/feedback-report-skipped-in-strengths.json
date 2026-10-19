@@ -1,0 +1,57 @@
+{
+  "session_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708001",
+  "partial": true,
+  "coverage": {
+    "main_total": 2,
+    "main_answered": 1,
+    "main_skipped": 1,
+    "follow_ups": 0
+  },
+  "strengths": [
+    {
+      "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+      "quote": "Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица",
+      "skipped": false,
+      "comment": "Точно объяснена причина быстрого поиска в словаре через хеш-таблицу."
+    },
+    {
+      "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708003",
+      "quote": null,
+      "skipped": true,
+      "comment": "Пропуск темы засчитан как сила."
+    }
+  ],
+  "gaps": [
+    {
+      "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708003",
+      "quote": null,
+      "skipped": true,
+      "comment": "Тема исключений пропущена — это базовый материал для junior-разработчика."
+    },
+    {
+      "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+      "quote": "кортеж неизменяемый",
+      "skipped": false,
+      "comment": "Ответ на вопрос о скорости поиска неполный: не упомянуты коллизии хеширования."
+    }
+  ],
+  "actions": [
+    {
+      "priority": 1,
+      "related_turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708003",
+      "text": "Разберите блоки try/except/else/finally и решите 3 задачи на обработку ошибок файлов."
+    },
+    {
+      "priority": 2,
+      "related_turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+      "text": "Повторите устройство хеш-таблицы: коллизии, амортизированную сложность, поведение при росте."
+    }
+  ],
+  "improved_examples": [
+    {
+      "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+      "text": "dict и set реализованы на хеш-таблицах, поэтому поиск в них в среднем O(1), а в list — O(n). При коллизиях сложность ухудшается, но амортизированно остаётся константной. Set выберу для проверки уникальности, dict — для пар ключ-значение.",
+      "uses_placeholders": false
+    }
+  ]
+}

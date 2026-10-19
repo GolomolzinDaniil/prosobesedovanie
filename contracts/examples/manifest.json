@@ -1,0 +1,299 @@
+{
+  "version": "2.0",
+  "note": "Проверяемые примеры контрактов: валидные и невалидные тела. stage: structural — нормативная модель Pydantic; domain — доменная валидация (app/domain); semantic — contracts/semantic_validation.py. Пример 75 XTR служит проверке формата и не устанавливает цену продукта.",
+  "examples": [
+    {
+      "file": "start-session-valid.json",
+      "description": "Валидный start_session (§3.1): python/junior/voice",
+      "model": "StartSession",
+      "stage": "structural",
+      "valid": true
+    },
+    {
+      "file": "start-session-invalid-enum.json",
+      "description": "Неподдерживаемые уровень и формат (§3.1)",
+      "model": "StartSession",
+      "stage": "structural",
+      "valid": false,
+      "expected_error_codes": [
+        "UNSUPPORTED_LEVEL",
+        "UNSUPPORTED_FORMAT"
+      ],
+      "internal_error_code": "INVALID_INPUT"
+    },
+    {
+      "file": "start-session-unknown-field.json",
+      "description": "Дополнительный actor_user_id — неизвестное поле (§3.1)",
+      "model": "StartSession",
+      "stage": "structural",
+      "valid": false,
+      "expected_error_codes": [
+        "INVALID_INPUT"
+      ],
+      "expected_field": "actor_user_id"
+    },
+    {
+      "file": "submit-answer-empty.json",
+      "description": "text=\"\" — EMPTY_ANSWER (§3.1)",
+      "model": "SubmitAnswer",
+      "stage": "domain",
+      "valid": false,
+      "expected_error_codes": [
+        "EMPTY_ANSWER"
+      ]
+    },
+    {
+      "file": "submit-answer-max-valid.json",
+      "description": "Граничные 4000 кодовых точек — принимается (AT09)",
+      "model": "SubmitAnswer",
+      "stage": "domain",
+      "valid": true
+    },
+    {
+      "file": "submit-answer-too-long.json",
+      "description": "Строка из 4001 символа — ANSWER_TOO_LONG, не обрезать (§3.1)",
+      "model": "SubmitAnswer",
+      "stage": "domain",
+      "valid": false,
+      "expected_error_codes": [
+        "ANSWER_TOO_LONG"
+      ]
+    },
+    {
+      "file": "error-response.json",
+      "description": "Единый ErrorResponse (§3.2), точный пример из ТЗ",
+      "model": "ErrorResponse",
+      "stage": "structural",
+      "valid": true
+    },
+    {
+      "file": "turn-assessment-technical-valid.json",
+      "description": "TurnAssessment 2.0 technical: correctness обязателен, evidence=null",
+      "model": "TurnAssessment",
+      "stage": "semantic",
+      "valid": true,
+      "semantic_context": {
+        "question_type": "technical",
+        "answer_text": "Список изменяемый и упорядоченный, кортеж неизменяемый. Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица. Множество использую, когда нужна уникальность элементов."
+      }
+    },
+    {
+      "file": "turn-assessment-hr-valid.json",
+      "description": "TurnAssessment 2.0 hr: evidence обязателен, correctness=null",
+      "model": "TurnAssessment",
+      "stage": "semantic",
+      "valid": true,
+      "semantic_context": {
+        "question_type": "hr",
+        "answer_text": "Я учусь на третьем курсе и пишу диплом по анализу данных. В учебном проекте собирал данные опросов в Python и считал статистику. На стажировке хочу получить опыт работы с реальными данными и ревью кода."
+      }
+    },
+    {
+      "file": "turn-assessment-invalid-score.json",
+      "description": "score=5 — нарушение диапазона 0..4 (§3.1)",
+      "model": "TurnAssessment",
+      "stage": "structural",
+      "valid": false,
+      "expected_error_codes": [
+        "INVALID_INPUT"
+      ],
+      "expected_field": "scores.correctness"
+    },
+    {
+      "file": "turn-assessment-invalid-quote.json",
+      "description": "Цитата отсутствует в фактическом ответе — QUOTE_NOT_FOUND",
+      "model": "TurnAssessment",
+      "stage": "semantic",
+      "valid": false,
+      "expected_error_codes": [
+        "QUOTE_NOT_FOUND"
+      ],
+      "semantic_context": {
+        "question_type": "technical",
+        "answer_text": "Список изменяемый и упорядоченный, кортеж неизменяемый. Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица. Множество использую, когда нужна уникальность элементов."
+      }
+    },
+    {
+      "file": "turn-assessment-both-topic-scores.json",
+      "description": "correctness и evidence одновременно — структурная ошибка",
+      "model": "TurnAssessment",
+      "stage": "structural",
+      "valid": false,
+      "expected_error_codes": [
+        "INVALID_INPUT"
+      ]
+    },
+    {
+      "file": "feedback-report-valid.json",
+      "description": "FeedbackReport 2.0: цитаты проверяемы, приоритеты 1..n, действие связано с пробелом",
+      "model": "FeedbackReport",
+      "stage": "semantic",
+      "valid": true,
+      "semantic_context": {
+        "snapshot": [
+          {
+            "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+            "ordinal": 1,
+            "kind": "main",
+            "question_type": "technical",
+            "main_index": 3,
+            "topic": "collections",
+            "question": "Чем dict и set отличаются от list по скорости поиска?",
+            "answer_text": "Список изменяемый и упорядоченный, кортеж неизменяемый. Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица. Множество использую, когда нужна уникальность элементов.",
+            "skipped": false,
+            "assessment": {
+              "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+              "scores": {
+                "relevance": 4,
+                "structure": 3,
+                "correctness": 3,
+                "evidence": null
+              },
+              "missing_points": [
+                "Не упомянуты коллизии хеширования"
+              ],
+              "evidence_quotes": [
+                "Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица"
+              ],
+              "explanation": "Ответ по существу, верные сложности, структура могла быть чётче.",
+              "suggested_action": "next_topic",
+              "next_question": null
+            }
+          },
+          {
+            "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708003",
+            "ordinal": 2,
+            "kind": "main",
+            "question_type": "technical",
+            "main_index": 4,
+            "topic": "exceptions",
+            "question": "Как работает try/except и зачем нужен finally?",
+            "answer_text": null,
+            "skipped": true,
+            "assessment": null
+          }
+        ],
+        "expected_partial": true
+      }
+    },
+    {
+      "file": "feedback-report-skipped-in-strengths.json",
+      "description": "Пропуск в strengths запрещён (§3.4)",
+      "model": "FeedbackReport",
+      "stage": "semantic",
+      "valid": false,
+      "expected_error_codes": [
+        "SKIPPED_IN_STRENGTHS"
+      ],
+      "semantic_context": {
+        "snapshot": [
+          {
+            "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+            "ordinal": 1,
+            "kind": "main",
+            "question_type": "technical",
+            "main_index": 3,
+            "topic": "collections",
+            "question": "Чем dict и set отличаются от list по скорости поиска?",
+            "answer_text": "Список изменяемый и упорядоченный, кортеж неизменяемый. Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица. Множество использую, когда нужна уникальность элементов.",
+            "skipped": false,
+            "assessment": {
+              "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+              "scores": {
+                "relevance": 4,
+                "structure": 3,
+                "correctness": 3,
+                "evidence": null
+              },
+              "missing_points": [
+                "Не упомянуты коллизии хеширования"
+              ],
+              "evidence_quotes": [
+                "Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица"
+              ],
+              "explanation": "Ответ по существу, верные сложности, структура могла быть чётче.",
+              "suggested_action": "next_topic",
+              "next_question": null
+            }
+          },
+          {
+            "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708003",
+            "ordinal": 2,
+            "kind": "main",
+            "question_type": "technical",
+            "main_index": 4,
+            "topic": "exceptions",
+            "question": "Как работает try/except и зачем нужен finally?",
+            "answer_text": null,
+            "skipped": true,
+            "assessment": null
+          }
+        ],
+        "expected_partial": true
+      }
+    },
+    {
+      "file": "feedback-report-priorities-bad.json",
+      "description": "Приоритеты не последовательны от 1 (§3.4)",
+      "model": "FeedbackReport",
+      "stage": "semantic",
+      "valid": false,
+      "expected_error_codes": [
+        "PRIORITIES_NOT_SEQUENTIAL"
+      ],
+      "semantic_context": {
+        "snapshot": [
+          {
+            "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+            "ordinal": 1,
+            "kind": "main",
+            "question_type": "technical",
+            "main_index": 3,
+            "topic": "collections",
+            "question": "Чем dict и set отличаются от list по скорости поиска?",
+            "answer_text": "Список изменяемый и упорядоченный, кортеж неизменяемый. Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица. Множество использую, когда нужна уникальность элементов.",
+            "skipped": false,
+            "assessment": {
+              "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708002",
+              "scores": {
+                "relevance": 4,
+                "structure": 3,
+                "correctness": 3,
+                "evidence": null
+              },
+              "missing_points": [
+                "Не упомянуты коллизии хеширования"
+              ],
+              "evidence_quotes": [
+                "Поиск в словаре работает за O(1), потому что dict реализован как хеш-таблица"
+              ],
+              "explanation": "Ответ по существу, верные сложности, структура могла быть чётче.",
+              "suggested_action": "next_topic",
+              "next_question": null
+            }
+          },
+          {
+            "turn_id": "3f2b8c1e-9d4a-4e7b-8a1c-2d5e6f708003",
+            "ordinal": 2,
+            "kind": "main",
+            "question_type": "technical",
+            "main_index": 4,
+            "topic": "exceptions",
+            "question": "Как работает try/except и зачем нужен finally?",
+            "answer_text": null,
+            "skipped": true,
+            "assessment": null
+          }
+        ],
+        "expected_partial": true
+      }
+    },
+    {
+      "file": "successful-payment.json",
+      "description": "Формат successful_payment XTR (§3.8); 75 XTR — пример формата, не цена",
+      "model": "SuccessfulPaymentPayload",
+      "stage": "structural",
+      "valid": true
+    }
+  ]
+}

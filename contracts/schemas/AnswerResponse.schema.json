@@ -1,0 +1,249 @@
+{
+  "$defs": {
+    "InterviewFormat": {
+      "enum": [
+        "text",
+        "voice"
+      ],
+      "title": "InterviewFormat",
+      "type": "string"
+    },
+    "Level": {
+      "enum": [
+        "intern",
+        "junior"
+      ],
+      "title": "Level",
+      "type": "string"
+    },
+    "RoleId": {
+      "enum": [
+        "python",
+        "analyst",
+        "qa"
+      ],
+      "title": "RoleId",
+      "type": "string"
+    },
+    "SessionStatus": {
+      "enum": [
+        "preparing",
+        "delivering_question",
+        "awaiting_answer",
+        "transcribing",
+        "confirming_transcript",
+        "evaluating",
+        "reporting",
+        "completed",
+        "cancelled",
+        "expired",
+        "failed"
+      ],
+      "title": "SessionStatus",
+      "type": "string"
+    },
+    "SessionView": {
+      "additionalProperties": false,
+      "properties": {
+        "session_id": {
+          "format": "uuid",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "role_id": {
+          "$ref": "#/$defs/RoleId"
+        },
+        "level": {
+          "$ref": "#/$defs/Level"
+        },
+        "format": {
+          "$ref": "#/$defs/InterviewFormat"
+        },
+        "status": {
+          "$ref": "#/$defs/SessionStatus"
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        },
+        "current_turn": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TurnView"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "main_total": {
+          "maximum": 6,
+          "minimum": 0,
+          "title": "Main Total",
+          "type": "integer"
+        },
+        "answered_count": {
+          "minimum": 0,
+          "title": "Answered Count",
+          "type": "integer"
+        },
+        "skipped_count": {
+          "minimum": 0,
+          "title": "Skipped Count",
+          "type": "integer"
+        },
+        "follow_ups_used": {
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Follow Ups Used",
+          "type": "integer"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expires At"
+        }
+      },
+      "required": [
+        "session_id",
+        "role_id",
+        "level",
+        "format",
+        "status",
+        "version",
+        "main_total",
+        "answered_count",
+        "skipped_count",
+        "follow_ups_used",
+        "created_at"
+      ],
+      "title": "SessionView",
+      "type": "object"
+    },
+    "TurnKind": {
+      "description": "Позиция вопроса в плане: основной или уточнение (§2.3).",
+      "enum": [
+        "main",
+        "follow_up"
+      ],
+      "title": "TurnKind",
+      "type": "string"
+    },
+    "TurnView": {
+      "additionalProperties": false,
+      "properties": {
+        "turn_id": {
+          "format": "uuid",
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "ordinal": {
+          "minimum": 1,
+          "title": "Ordinal",
+          "type": "integer"
+        },
+        "kind": {
+          "$ref": "#/$defs/TurnKind"
+        },
+        "main_index": {
+          "anyOf": [
+            {
+              "maximum": 6,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Main Index"
+        },
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "question_text": {
+          "maxLength": 700,
+          "minLength": 1,
+          "title": "Question Text",
+          "type": "string"
+        },
+        "difficulty": {
+          "anyOf": [
+            {
+              "maximum": 3,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Difficulty"
+        },
+        "delivered_message_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delivered Message Id"
+        }
+      },
+      "required": [
+        "turn_id",
+        "ordinal",
+        "kind",
+        "topic",
+        "question_text"
+      ],
+      "title": "TurnView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "ok": {
+      "const": true,
+      "title": "Ok",
+      "type": "boolean"
+    },
+    "session": {
+      "$ref": "#/$defs/SessionView"
+    },
+    "job_id": {
+      "format": "uuid",
+      "title": "Job Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ok",
+    "session",
+    "job_id"
+  ],
+  "title": "AnswerResponse",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

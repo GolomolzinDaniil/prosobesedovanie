@@ -1,0 +1,49 @@
+{
+  "$defs": {
+    "InterviewFormat": {
+      "enum": [
+        "text",
+        "voice"
+      ],
+      "title": "InterviewFormat",
+      "type": "string"
+    },
+    "Level": {
+      "enum": [
+        "intern",
+        "junior"
+      ],
+      "title": "Level",
+      "type": "string"
+    },
+    "RoleId": {
+      "enum": [
+        "python",
+        "analyst",
+        "qa"
+      ],
+      "title": "RoleId",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "role_id": {
+      "$ref": "#/$defs/RoleId"
+    },
+    "level": {
+      "$ref": "#/$defs/Level"
+    },
+    "format": {
+      "$ref": "#/$defs/InterviewFormat"
+    }
+  },
+  "required": [
+    "role_id",
+    "level",
+    "format"
+  ],
+  "title": "StartSession",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

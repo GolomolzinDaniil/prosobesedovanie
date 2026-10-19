@@ -1,0 +1,48 @@
+{
+  "additionalProperties": false,
+  "description": "Формат Telegram successful_payment (XTR). Пример 75 XTR не устанавливает цену.",
+  "properties": {
+    "currency": {
+      "const": "XTR",
+      "title": "Currency",
+      "type": "string"
+    },
+    "total_amount": {
+      "exclusiveMinimum": 0,
+      "title": "Total Amount",
+      "type": "integer"
+    },
+    "invoice_payload": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Invoice Payload",
+      "type": "string"
+    },
+    "telegram_payment_charge_id": {
+      "minLength": 1,
+      "title": "Telegram Payment Charge Id",
+      "type": "string"
+    },
+    "provider_payment_charge_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Provider Payment Charge Id"
+    }
+  },
+  "required": [
+    "currency",
+    "total_amount",
+    "invoice_payload",
+    "telegram_payment_charge_id"
+  ],
+  "title": "SuccessfulPaymentPayload",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

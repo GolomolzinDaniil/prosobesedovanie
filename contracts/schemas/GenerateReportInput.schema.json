@@ -1,0 +1,279 @@
+{
+  "$defs": {
+    "Level": {
+      "enum": [
+        "intern",
+        "junior"
+      ],
+      "title": "Level",
+      "type": "string"
+    },
+    "QuestionType": {
+      "description": "Тип темы вопроса: HR или технический (§3.3). Определяет пару оценок.",
+      "enum": [
+        "hr",
+        "technical"
+      ],
+      "title": "QuestionType",
+      "type": "string"
+    },
+    "RoleId": {
+      "enum": [
+        "python",
+        "analyst",
+        "qa"
+      ],
+      "title": "RoleId",
+      "type": "string"
+    },
+    "SnapshotTurn": {
+      "additionalProperties": false,
+      "properties": {
+        "turn_id": {
+          "format": "uuid",
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "ordinal": {
+          "minimum": 1,
+          "title": "Ordinal",
+          "type": "integer"
+        },
+        "kind": {
+          "$ref": "#/$defs/TurnKind"
+        },
+        "question_type": {
+          "$ref": "#/$defs/QuestionType"
+        },
+        "main_index": {
+          "anyOf": [
+            {
+              "maximum": 6,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Main Index"
+        },
+        "topic": {
+          "minLength": 1,
+          "title": "Topic",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 700,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "answer_text": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Answer Text"
+        },
+        "skipped": {
+          "title": "Skipped",
+          "type": "boolean"
+        },
+        "assessment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TurnAssessment"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "turn_id",
+        "ordinal",
+        "kind",
+        "question_type",
+        "topic",
+        "question",
+        "skipped"
+      ],
+      "title": "SnapshotTurn",
+      "type": "object"
+    },
+    "SuggestedAction": {
+      "enum": [
+        "follow_up",
+        "next_topic"
+      ],
+      "title": "SuggestedAction",
+      "type": "string"
+    },
+    "TurnAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "turn_id": {
+          "format": "uuid",
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "scores": {
+          "$ref": "#/$defs/TurnScores"
+        },
+        "missing_points": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Points",
+          "type": "array"
+        },
+        "evidence_quotes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 5,
+          "title": "Evidence Quotes",
+          "type": "array"
+        },
+        "explanation": {
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "suggested_action": {
+          "$ref": "#/$defs/SuggestedAction"
+        },
+        "next_question": {
+          "anyOf": [
+            {
+              "maxLength": 700,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Next Question"
+        }
+      },
+      "required": [
+        "turn_id",
+        "scores",
+        "explanation",
+        "suggested_action"
+      ],
+      "title": "TurnAssessment",
+      "type": "object"
+    },
+    "TurnKind": {
+      "description": "Позиция вопроса в плане: основной или уточнение (§2.3).",
+      "enum": [
+        "main",
+        "follow_up"
+      ],
+      "title": "TurnKind",
+      "type": "string"
+    },
+    "TurnScores": {
+      "additionalProperties": false,
+      "properties": {
+        "relevance": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Relevance",
+          "type": "integer"
+        },
+        "structure": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Structure",
+          "type": "integer"
+        },
+        "correctness": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correctness"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        }
+      },
+      "required": [
+        "relevance",
+        "structure"
+      ],
+      "title": "TurnScores",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "session_id": {
+      "format": "uuid",
+      "title": "Session Id",
+      "type": "string"
+    },
+    "role_id": {
+      "$ref": "#/$defs/RoleId"
+    },
+    "level": {
+      "$ref": "#/$defs/Level"
+    },
+    "partial": {
+      "title": "Partial",
+      "type": "boolean"
+    },
+    "snapshot_turns": {
+      "items": {
+        "$ref": "#/$defs/SnapshotTurn"
+      },
+      "maxItems": 8,
+      "minItems": 1,
+      "title": "Snapshot Turns",
+      "type": "array"
+    }
+  },
+  "required": [
+    "session_id",
+    "role_id",
+    "level",
+    "partial",
+    "snapshot_turns"
+  ],
+  "title": "GenerateReportInput",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

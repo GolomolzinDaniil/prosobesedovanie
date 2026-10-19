@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "ok": {
+      "const": true,
+      "title": "Ok",
+      "type": "boolean"
+    },
+    "accepted": {
+      "title": "Accepted",
+      "type": "boolean"
+    },
+    "deadline": {
+      "format": "date-time",
+      "title": "Deadline",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ok",
+    "accepted",
+    "deadline"
+  ],
+  "title": "DeleteResponse",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

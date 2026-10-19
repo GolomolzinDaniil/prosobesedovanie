@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="a3" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#567"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="640" fill="#fbfbfd"/>
+  <text x="500" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#223">Сущности: 14 таблиц (§2.3, ТЗ 2.0)</text>
+
+  <g font-size="10.5">
+    <!-- users -->
+    <rect x="40" y="60" width="200" height="130" rx="8" fill="#e3f0ff" stroke="#3a6ea5" stroke-width="1.6"/>
+    <text x="140" y="82" text-anchor="middle" font-size="12" font-weight="bold" fill="#1d3f66">users</text>
+    <text x="52" y="102" fill="#334">PK id UUID · telegram_user_id UQ</text>
+    <text x="52" y="118" fill="#334">chat_id · ui_state · version</text>
+    <text x="52" y="134" fill="#334">consent_version + consent_at (пара)</text>
+    <text x="52" y="150" fill="#334">source_code (allowlist)</text>
+    <text x="52" y="166" fill="#334">deletion_requested_at</text>
+
+    <!-- sessions -->
+    <rect x="300" y="60" width="220" height="150" rx="8" fill="#fff4e0" stroke="#c8862a" stroke-width="1.6"/>
+    <text x="410" y="82" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5210">sessions</text>
+    <text x="312" y="102" fill="#334">PK id · FK user_id CASCADE</text>
+    <text x="312" y="118" fill="#334">role_id/level/format (словари)</text>
+    <text x="312" y="134" fill="#334">status (11) · version · requested_action</text>
+    <text x="312" y="150" fill="#334">catalog/prompt/model_profile_version</text>
+    <text x="312" y="166" fill="#334">current_turn_id → turns(id,session_id)</text>
+    <text x="312" y="182" fill="#334">current_difficulty · follow_ups_used ≤2</text>
+    <text x="312" y="198" fill="#334">expires_at · finished_at (терминальные)</text>
+
+    <!-- turns -->
+    <rect x="580" y="60" width="210" height="150" rx="8" fill="#e9f9ee" stroke="#2e8b57" stroke-width="1.6"/>
+    <text x="685" y="82" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e5c38">turns</text>
+    <text x="592" y="102" fill="#334">PK id · FK session_id CASCADE</text>
+    <text x="592" y="118" fill="#334">UQ (session_id, ordinal)</text>
+    <text x="592" y="134" fill="#334">kind main|follow_up · main_index 1..6</text>
+    <text x="592" y="150" fill="#334">question_type hr|technical · topic</text>
+    <text x="592" y="166" fill="#334">question_text 1..700 · rubric JSONB</text>
+    <text x="592" y="182" fill="#334">answer_text 1..4000 · skipped</text>
+    <text x="592" y="198" fill="#334">assessment JSONB · draft + version · stt</text>
+
+    <!-- reports -->
+    <rect x="840" y="60" width="130" height="120" rx="8" fill="#f4ecff" stroke="#7a5aa5" stroke-width="1.6"/>
+    <text x="905" y="82" text-anchor="middle" font-size="12" font-weight="bold" fill="#43305e">reports</text>
+    <text x="850" y="102" fill="#334">PK id</text>
+    <text x="850" y="118" fill="#334">FK session UQ</text>
+    <text x="850" y="134" fill="#334">report_json</text>
+    <text x="850" y="150" fill="#334">parts 1..4</text>
+    <text x="850" y="166" fill="#334">partial·degraded</text>
+
+    <!-- credits -->
+    <rect x="40" y="250" width="200" height="130" rx="8" fill="#fdf6e3" stroke="#b09a2a" stroke-width="1.6"/>
+    <text x="140" y="272" text-anchor="middle" font-size="12" font-weight="bold" fill="#6e5f10">credits</text>
+    <text x="52" y="292" fill="#334">PK id · FK user CASCADE</text>
+    <text x="52" y="308" fill="#334">source trial|grant|payment</text>
+    <text x="52" y="324" fill="#334">state available|reserved|</text>
+    <text x="52" y="340" fill="#334">      consumed|revoked (пары FK)</text>
+    <text x="52" y="356" fill="#334">payment_id + unit_index UQ</text>
+
+    <!-- payments -->
+    <rect x="40" y="430" width="200" height="90" rx="8" fill="#fdeaea" stroke="#b04a4a" stroke-width="1.6"/>
+    <text x="140" y="452" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a2e2e">payments</text>
+    <text x="52" y="472" fill="#334">charge_id UQ · user SET NULL</text>
+    <text x="52" y="488" fill="#334">XTR, units, статусы (коммерческий</text>
+    <text x="52" y="504" fill="#334">этап; схема создана пустой)</text>
+
+    <!-- inbox -->
+    <rect x="300" y="250" width="200" height="120" rx="8" fill="#e8eef7" stroke="#3a5ea5" stroke-width="1.6"/>
+    <text x="400" y="272" text-anchor="middle" font-size="12" font-weight="bold" fill="#243f6e">inbox</text>
+    <text x="312" y="292" fill="#334">PK update_id (дедупликация)</text>
+    <text x="312" y="308" fill="#334">kind · status · attempts ≤5</text>
+    <text x="312" y="324" fill="#334">payload (обнуляется ≤24 ч)</text>
+    <text x="312" y="340" fill="#334">lease_owner/expires · user SET NULL</text>
+
+    <!-- jobs -->
+    <rect x="550" y="250" width="210" height="130" rx="8" fill="#fff4e0" stroke="#c8862a" stroke-width="1.6"/>
+    <text x="655" y="272" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5210">jobs</text>
+    <text x="562" y="292" fill="#334">PK id · unique_key UQ</text>
+    <text x="562" y="308" fill="#334">kind assess|report|transcribe|tts</text>
+    <text x="562" y="324" fill="#334">state · attempts · expected_version</text>
+    <text x="562" y="340" fill="#334">lease_owner/expires · payload/result</text>
+    <text x="562" y="356" fill="#334">FK (turn_id, session_id) → turns</text>
+
+    <!-- ai_calls -->
+    <rect x="810" y="250" width="160" height="130" rx="8" fill="#f4ecff" stroke="#7a5aa5" stroke-width="1.6"/>
+    <text x="890" y="272" text-anchor="middle" font-size="12" font-weight="bold" fill="#43305e">ai_calls</text>
+    <text x="822" y="292" fill="#334">PK id · FK job CASCADE</text>
+    <text x="822" y="308" fill="#334">UQ (job_id, attempt) —</text>
+    <text x="822" y="324" fill="#334">предел 2 вызова</text>
+    <text x="822" y="340" fill="#334">reserved/actual_usd</text>
+    <text x="822" y="356" fill="#334">result_state (unknown)</text>
+
+    <!-- outbox -->
+    <rect x="300" y="420" width="220" height="120" rx="8" fill="#e8eef7" stroke="#3a5ea5" stroke-width="1.6"/>
+    <text x="410" y="442" text-anchor="middle" font-size="12" font-weight="bold" fill="#243f6e">outbox</text>
+    <text x="312" y="462" fill="#334">PK id · unique_key UQ</text>
+    <text x="312" y="478" fill="#334">UQ (chat_id, seq) — порядок</text>
+    <text x="312" y="494" fill="#334">kind · is_required · state · attempts ≤10</text>
+    <text x="312" y="510" fill="#334">receipts (известные id) · payload ≤24 ч</text>
+
+    <!-- ui_tokens -->
+    <rect x="570" y="420" width="190" height="110" rx="8" fill="#e9f9ee" stroke="#2e8b57" stroke-width="1.6"/>
+    <text x="665" y="442" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e5c38">ui_tokens</text>
+    <text x="582" y="462" fill="#334">PK token CHAR(22)</text>
+    <text x="582" y="478" fill="#334">action (словарь) · allowed_value</text>
+    <text x="582" y="494" fill="#334">FK user/session CASCADE</text>
+    <text x="582" y="510" fill="#334">expected_version · consumed_at</text>
+
+    <!-- events -->
+    <rect x="800" y="420" width="170" height="110" rx="8" fill="#fdf6e3" stroke="#b09a2a" stroke-width="1.6"/>
+    <text x="885" y="442" text-anchor="middle" font-size="12" font-weight="bold" fill="#6e5f10">events</text>
+    <text x="812" y="462" fill="#334">dedup_key UQ (переход)</text>
+    <text x="812" y="478" fill="#334">name: start, first_answer,</text>
+    <text x="812" y="494" fill="#334">answer_accepted, report_*,</text>
+    <text x="812" y="510" fill="#334">trial_consumed (+платежи)</text>
+
+    <!-- daily_usage -->
+    <rect x="300" y="570" width="220" height="56" rx="8" fill="#f4ecff" stroke="#7a5aa5" stroke-width="1.6"/>
+    <text x="410" y="592" text-anchor="middle" font-size="12" font-weight="bold" fill="#43305e">daily_usage</text>
+    <text x="312" y="612" fill="#334">PK day · reserved / known / unknown USD</text>
+
+    <!-- deletion_tombstones -->
+    <rect x="570" y="570" width="230" height="56" rx="8" fill="#fdeaea" stroke="#b04a4a" stroke-width="1.6"/>
+    <text x="685" y="592" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a2e2e">deletion_tombstones</text>
+    <text x="582" y="612" fill="#334">PK user_id (без FK) · 7 дней · restore-защита</text>
+  </g>
+
+  <!-- relations -->
+  <g stroke="#567" stroke-width="1.4" fill="none">
+    <line x1="240" y1="110" x2="298" y2="110" marker-end="url(#a3)"/>
+    <line x1="520" y1="120" x2="578" y2="120" marker-end="url(#a3)"/>
+    <line x1="790" y1="110" x2="838" y2="110" marker-end="url(#a3)"/>
+    <line x1="140" y1="190" x2="140" y2="248" marker-end="url(#a3)"/>
+    <line x1="140" y1="380" x2="140" y2="428" marker-end="url(#a3)"/>
+    <line x1="240" y1="300" x2="298" y2="300" marker-end="url(#a3)"/>
+    <line x1="760" y1="300" x2="808" y2="300" marker-end="url(#a3)"/>
+    <line x1="655" y1="250" x2="685" y2="212" marker-end="url(#a3)"/>
+    <line x1="240" y1="470" x2="298" y2="470" marker-end="url(#a3)"/>
+    <line x1="520" y1="480" x2="568" y2="480" marker-end="url(#a3)"/>
+  </g>
+  <text x="500" y="34" text-anchor="middle" font-size="11" fill="#567"></text>
+</svg>

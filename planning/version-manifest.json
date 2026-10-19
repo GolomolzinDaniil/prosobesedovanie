@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-10-18T16:11:09+00:00",
+  "git_rev": "ebef78c68cf015cd0453cff17c72eaf8fc245cd0",
+  "python": "3.11.2",
+  "base_image": "python:3.11-slim",
+  "requirements": {
+    "fastapi": "0.143.3",
+    "starlette": "1.8.0",
+    "pydantic": "2.14.1",
+    "asyncpg": "0.32.0",
+    "uvicorn": "0.54.0",
+    "aiogram": "3.31.0",
+    "aiohttp": "3.14.5"
+  },
+  "migrations": [
+    "0001_initial.sql",
+    "0002_worker_indexes.sql"
+  ],
+  "prompts": {
+    "report-system.txt": {
+      "sha256": "04ba59804e5d9314100f5c1f9ed8a276c0156ea98d61ae14c5c2c7dd765b70ad",
+      "bytes": 7363
+    },
+    "turn-system.txt": {
+      "sha256": "4b85657c1a5b3525bb73b3c30dccd03fae2d248e64d40f9324138ca63a18a51e",
+      "bytes": 9278
+    },
+    "user-envelope.txt": {
+      "sha256": "b5f08f98bb25b3f5f3b0e2191fc454680ad805ebf1f184f5f196ac72860d57b8",
+      "bytes": 3532
+    }
+  },
+  "config": {
+    "settings.json": {
+      "version": "2.0",
+      "sha256": "f046d6b2e0ef664e619f8d1e09a68bdee390f14dace8b7a09fea46cee0e722b3"
+    },
+    "questions.json": {
+      "version": "2.0",
+      "sha256": "d98dbecad0279addc167c32d093a982565d0151b3e309f0d5eb586bb01e790e3"
+    },
+    "products.json": {
+      "version": "2.0",
+      "sha256": "3ee2e1bd142def957d60b1eb9390f52463daf37c0c8b0f8aa8f7ac2c3d2941f5"
+    }
+  },
+  "contracts_version": "2.0",
+  "provider_profile": {
+    "present": false
+  }
+}

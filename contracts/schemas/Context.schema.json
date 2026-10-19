@@ -1,0 +1,28 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "request_id": {
+      "format": "uuid",
+      "title": "Request Id",
+      "type": "string"
+    },
+    "actor_user_id": {
+      "exclusiveMinimum": 0,
+      "title": "Actor User Id",
+      "type": "integer"
+    },
+    "update_id": {
+      "exclusiveMinimum": 0,
+      "title": "Update Id",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "request_id",
+    "actor_user_id",
+    "update_id"
+  ],
+  "title": "Context",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

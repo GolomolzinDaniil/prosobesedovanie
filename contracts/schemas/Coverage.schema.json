@@ -1,0 +1,38 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "main_total": {
+      "maximum": 6,
+      "minimum": 0,
+      "title": "Main Total",
+      "type": "integer"
+    },
+    "main_answered": {
+      "maximum": 6,
+      "minimum": 0,
+      "title": "Main Answered",
+      "type": "integer"
+    },
+    "main_skipped": {
+      "maximum": 6,
+      "minimum": 0,
+      "title": "Main Skipped",
+      "type": "integer"
+    },
+    "follow_ups": {
+      "maximum": 2,
+      "minimum": 0,
+      "title": "Follow Ups",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "main_total",
+    "main_answered",
+    "main_skipped",
+    "follow_ups"
+  ],
+  "title": "Coverage",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

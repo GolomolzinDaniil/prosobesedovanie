@@ -1,0 +1,33 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "session_id": {
+      "format": "uuid",
+      "title": "Session Id",
+      "type": "string"
+    },
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "transcript_version": {
+      "minimum": 1,
+      "title": "Transcript Version",
+      "type": "integer"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "session_id",
+    "turn_id",
+    "transcript_version",
+    "text"
+  ],
+  "title": "ConfirmTranscript",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

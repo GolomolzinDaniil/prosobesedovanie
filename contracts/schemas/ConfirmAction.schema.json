@@ -1,0 +1,17 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "token": {
+      "maxLength": 22,
+      "minLength": 22,
+      "title": "Token",
+      "type": "string"
+    }
+  },
+  "required": [
+    "token"
+  ],
+  "title": "ConfirmAction",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

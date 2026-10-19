@@ -1,0 +1,66 @@
+{
+  "additionalProperties": false,
+  "description": "Метаданные Telegram voice; не заменяют проверку файла (§3.5).",
+  "properties": {
+    "file_id": {
+      "minLength": 1,
+      "title": "File Id",
+      "type": "string"
+    },
+    "duration": {
+      "exclusiveMinimum": 0,
+      "title": "Duration",
+      "type": "integer"
+    },
+    "file_size": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "File Size"
+    },
+    "mime_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Mime Type"
+    },
+    "message_id": {
+      "exclusiveMinimum": 0,
+      "title": "Message Id",
+      "type": "integer"
+    },
+    "session_id": {
+      "format": "uuid",
+      "title": "Session Id",
+      "type": "string"
+    },
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "file_id",
+    "duration",
+    "message_id",
+    "session_id",
+    "turn_id"
+  ],
+  "title": "VoiceMessage",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}

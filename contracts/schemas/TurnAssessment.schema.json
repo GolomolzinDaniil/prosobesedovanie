@@ -1,0 +1,120 @@
+{
+  "$defs": {
+    "SuggestedAction": {
+      "enum": [
+        "follow_up",
+        "next_topic"
+      ],
+      "title": "SuggestedAction",
+      "type": "string"
+    },
+    "TurnScores": {
+      "additionalProperties": false,
+      "properties": {
+        "relevance": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Relevance",
+          "type": "integer"
+        },
+        "structure": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Structure",
+          "type": "integer"
+        },
+        "correctness": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correctness"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        }
+      },
+      "required": [
+        "relevance",
+        "structure"
+      ],
+      "title": "TurnScores",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "turn_id": {
+      "format": "uuid",
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "scores": {
+      "$ref": "#/$defs/TurnScores"
+    },
+    "missing_points": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Points",
+      "type": "array"
+    },
+    "evidence_quotes": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 5,
+      "title": "Evidence Quotes",
+      "type": "array"
+    },
+    "explanation": {
+      "minLength": 1,
+      "title": "Explanation",
+      "type": "string"
+    },
+    "suggested_action": {
+      "$ref": "#/$defs/SuggestedAction"
+    },
+    "next_question": {
+      "anyOf": [
+        {
+          "maxLength": 700,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Next Question"
+    }
+  },
+  "required": [
+    "turn_id",
+    "scores",
+    "explanation",
+    "suggested_action"
+  ],
+  "title": "TurnAssessment",
+  "type": "object",
+  "$comment": "Производная схема из contracts/models.py, версия 2.0"
+}
